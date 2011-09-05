@@ -91,8 +91,14 @@ void ke_run(void)
 	struct ctx_t *ctx;
 
 	/* Run an instruction from every running process */
-	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next)
-		ctx_execute_inst(ctx);
+	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next) {
+		int i;
+		for ( i = 0 ; i < instr_slice ; ++i) {
+			ctx_execute_inst(ctx);
+			if (ctx!=ke->running_list_head)
+				break;
+		}
+	}
 	
 	/* Free finished contexts */
 	while (ke->finished_list_head)

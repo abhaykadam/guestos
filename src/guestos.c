@@ -22,6 +22,8 @@
 #include <signal.h>
 #include <m2skernel.h>
 #include <string.h>
+#include <limits.h>
+#include <stdio.h>
 
 /* Multi2Sim version */
 #ifndef VERSION
@@ -57,9 +59,49 @@ static uint64_t sim_inst = 0;
 
 /* Variables */
 static int sigint_received = 0;
+extern int instr_slice;
 
 //int max_path_length = 100;
 void shell();
+
+
+
+
+/*boot parameters file declaration*/
+#define BOOT_FILE ".config"
+
+int get_param(const char *param, char *value){
+	FILE *fp;
+	if ((fp=fopen(BOOT_FILE,"r"))==0)
+		perror("boot configuration file couldn't be loaded.\n");
+	else {
+		char str_buf[LINE_MAX + 1];
+		int len = strlen(param);
+		char delim[len+2];
+
+		strcat(strcpy(delim,param), "=");
+
+		while(fgets(str_buf, sizeof(str_buf), fp) != NULL) {
+			if (strncmp(delim,str_buf,len+1)==0){
+				strcpy(value,str_buf+len+1);
+				return 0;	
+			}
+		}
+		return 1;			
+	}
+}
+
+int set_defaults(void) {
+	char param_value[LINE_MAX+1];
+	get_param("INSTR_SLICE", param_value);
+	instr_slice = atoi(param_value);
+}
+
+int boot(void) {
+	// to install system calls
+	install_systemcall();
+	set_defaults();
+}
 
 static void sim_reg_options() {
     opt_reg_string("-title", "Simulation title", &sim_title);
@@ -167,8 +209,9 @@ int main(int argc, char **argv) {
 
     /* Initialize */
     ke_init();
-    // to install system calls
-    install_systemcall();
+    
+	boot();
+
     /////	install_sighandler();
     //	printf("\n enter path:");
     //	fgets(user_prog_path,200,stdin);

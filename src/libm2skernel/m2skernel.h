@@ -46,6 +46,8 @@
 struct ctx_t;
 struct fd_t;
 
+int instr_slice;
+
 /* Maximum length for paths */
 #define MAX_PATH_SIZE  200
 

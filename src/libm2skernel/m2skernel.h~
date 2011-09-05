@@ -395,7 +395,7 @@ struct signal_handlers_t {
 	} sigaction[64];
 };
 
-struct signal_handlers_t *signal_handlers_create(void);
+struct signal_handlers_t *install_signal_handlers(void);
 void signal_handlers_free(struct signal_handlers_t *signal_handlers);
 
 void signal_handler_run(struct ctx_t *ctx, int sig);
