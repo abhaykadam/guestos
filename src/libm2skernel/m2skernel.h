@@ -529,6 +529,8 @@ struct ctx_t {
 	struct regs_t *regs;  /* Logical register file */
 	struct signal_masks_t *signal_masks;
 	struct signal_handlers_t *signal_handlers;
+
+	int instr_slice;
 };
 
 enum ctx_status_enum {

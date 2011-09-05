@@ -21,6 +21,7 @@
 
 
 int ctx_debug_category;
+extern int instr_slice;
 
 
 static struct string_map_t ctx_status_map = {
@@ -52,6 +53,7 @@ static struct ctx_t *ctx_do_create()
 	/* Create context and set its status */
 	ctx = calloc(1, sizeof(struct ctx_t));
 	ctx->pid = ke->current_pid++;
+	ctx->instr_slice = instr_slice;
 
 	/* Update status so that the context is inserted in the
 	 * corresponding lists. The ctx_running parameter has no

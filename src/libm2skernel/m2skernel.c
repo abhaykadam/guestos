@@ -93,7 +93,7 @@ void ke_run(void)
 	/* Run an instruction from every running process */
 	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next) {
 		int i;
-		for ( i = 0 ; i < instr_slice ; ++i) {
+		for ( i = 0 ; i < ctx->instr_slice ; ++i) {
 			ctx_execute_inst(ctx);
 			if (ctx!=ke->running_list_head)
 				break;
