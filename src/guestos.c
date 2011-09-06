@@ -72,9 +72,10 @@ void shell();
 
 int get_param(const char *param, char *value){
 	FILE *fp;
-	if ((fp=fopen(BOOT_FILE,"r"))==0)
+	if ((fp=fopen(BOOT_FILE,"r"))==0) {
 		perror("boot configuration file couldn't be loaded.\n");
-	else {
+		return -1;
+	} else {
 		char str_buf[LINE_MAX + 1];
 		int len = strlen(param);
 		char delim[len+2];
@@ -91,13 +92,24 @@ int get_param(const char *param, char *value){
 	}
 }
 
-int set_defaults(void) {
+void set_defaults(void) {
 	char param_value[LINE_MAX+1];
 	get_param("INSTR_SLICE", param_value);
 	instr_slice = atoi(param_value);
+
+	int heads, tracks, sectors;
+	char command[1000];
+	get_param("NUM_HEADS",param_value);
+	heads=atoi(param_value);
+	get_param("NUM_TRACKS",param_value);
+	tracks=atoi(param_value);
+	get_param("NUM_SECTORS",param_value);
+	sectors=atoi(param_value);
+	sprintf(command,"dd if=/dev/zero of=disk.img bs=%dx%dx%db count=1",heads,tracks,sectors);
+	system(command);
 }
 
-int boot(void) {
+void boot(void) {
 	// to install system calls
 	install_systemcall();
 	set_defaults();
@@ -190,7 +202,7 @@ int main(int argc, char **argv) {
 
     fprintf(stderr, "********************************************************");
     fprintf(stderr, "\n WELCOME TO GUESTOS\n");
-    fprintf(stderr, "********************************************************");
+    fprintf(stderr, "********************************************************\n");
     //Subhajit Changes
 
     /* Options */
@@ -215,7 +227,6 @@ int main(int argc, char **argv) {
     /////	install_sighandler();
     //	printf("\n enter path:");
     //	fgets(user_prog_path,200,stdin);
-    int i = 0;
     //for( ii=0;ii<strlen(user_prog_path);ii++)
     //	argv[1][ii]=user_prog_path[ii];
     //char * origargv= argv;
