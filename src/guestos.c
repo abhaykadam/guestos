@@ -109,9 +109,17 @@ void set_defaults(void) {
 	system(command);
 }
 
+void install_signals(void){
+	signal(SIGINT, &sim_signal_handler);
+    	signal(SIGABRT, &sim_signal_handler);
+    	signal(SIGFPE, &sim_signal_handler);
+    	signal(SIGUSR2, &sim_signal_handler);
+}
+
 void boot(void) {
 	// to install system calls
 	install_systemcall();
+	install_signals();
 	set_defaults();
 }
 
