@@ -118,7 +118,6 @@ void install_signals(void){
 
 void boot(void) {
 	// to install system calls
-	install_systemcall();
 	install_signals();
 	set_defaults();
 }

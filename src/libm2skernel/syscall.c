@@ -890,17 +890,6 @@ int guestos5(void) {
     return syscall(326, "pwd");
 }
 
-/* Function to install user provided system calls
- This function initiales the appropriate function pointer array location
- with corrosponding system call handler's address. */
-void install_systemcall() {
-    guestf_pointer1[0] = guestos1;
-    guestf_pointer2[0] = guestos2;
-    guestf_pointer1[1] = guestos3;
-    guestf_pointer2[1] = guestos4;
-    guestf_pointer1[2] = guestos5;
-}
-
 void handle_guest_syscalls() {
     int syscode = isa_regs->eax;
     int retval = 0;
@@ -908,27 +897,27 @@ void handle_guest_syscalls() {
         case syscall_code_guestos1:
 
         {
-            retval = guestf_pointer1[0]();
+            retval = guestos1();
             break;
         }
         case syscall_code_guestos2:
 
         {
             uint32_t ipstring = isa_regs->ebx;
-            retval = guestf_pointer2[0](ipstring);
+            retval = guestos2(ipstring);
             break;
         }
         case syscall_code_guestos3:
 
         {
-            retval = guestf_pointer1[1]();
+            retval = guestos3();
             break;
         }
         case syscall_code_guestos4:
         {
 
             uint32_t path = isa_regs->ebx;
-            retval = guestf_pointer2[1](path);
+            retval = guestos4(path);
             //retval=guestos4(path);
             /* Return */
             break;
@@ -937,7 +926,7 @@ void handle_guest_syscalls() {
         case syscall_code_guestos5:
 
         {
-            retval = guestf_pointer1[2]();
+            retval = guestos5();
             break;
         }
 
