@@ -65,63 +65,6 @@ extern int instr_slice;
 void shell();
 
 
-
-
-/*boot parameters file declaration*/
-#define BOOT_FILE ".config"
-
-int get_param(const char *param, char *value){
-	FILE *fp;
-	if ((fp=fopen(BOOT_FILE,"r"))==0) {
-		perror("boot configuration file couldn't be loaded.\n");
-		return -1;
-	} else {
-		char str_buf[LINE_MAX + 1];
-		int len = strlen(param);
-		char delim[len+2];
-
-		strcat(strcpy(delim,param), "=");
-
-		while(fgets(str_buf, sizeof(str_buf), fp) != NULL) {
-			if (strncmp(delim,str_buf,len+1)==0){
-				strcpy(value,str_buf+len+1);
-				return 0;	
-			}
-		}
-		return 1;			
-	}
-}
-
-void set_defaults(void) {
-	char param_value[LINE_MAX+1];
-	get_param("INSTR_SLICE", param_value);
-	instr_slice = atoi(param_value);
-
-	int heads, tracks, sectors;
-	char command[1000];
-	get_param("NUM_HEADS",param_value);
-	heads=atoi(param_value);
-	get_param("NUM_TRACKS",param_value);
-	tracks=atoi(param_value);
-	get_param("NUM_SECTORS",param_value);
-	sectors=atoi(param_value);
-	sprintf(command,"dd if=/dev/zero of=disk.img bs=%dx%dx%db count=1",heads,tracks,sectors);
-	system(command);
-}
-
-void install_signals(void){
-	signal(SIGINT, &sim_signal_handler);
-    	signal(SIGABRT, &sim_signal_handler);
-    	signal(SIGFPE, &sim_signal_handler);
-    	signal(SIGUSR2, &sim_signal_handler);
-}
-
-void boot(void) {
-	// to install system calls
-	install_signals();
-	set_defaults();
-}
-
 static void sim_reg_options() {
     opt_reg_string("-title", "Simulation title", &sim_title);
     opt_reg_string("-config", "m2s-fast configuration file", &configfile);
@@ -190,6 +133,63 @@ static void sim_signal_handler(int signum) {
             break;
     }
 }
+
+
+/*boot parameters file declaration*/
+#define BOOT_FILE ".config"
+
+int get_param(const char *param, char *value){
+	FILE *fp;
+	if ((fp=fopen(BOOT_FILE,"r"))==0) {
+		perror("boot configuration file couldn't be loaded.\n");
+		return -1;
+	} else {
+		char str_buf[LINE_MAX + 1];
+		int len = strlen(param);
+		char delim[len+2];
+
+		strcat(strcpy(delim,param), "=");
+
+		while(fgets(str_buf, sizeof(str_buf), fp) != NULL) {
+			if (strncmp(delim,str_buf,len+1)==0){
+				strcpy(value,str_buf+len+1);
+				return 0;	
+			}
+		}
+		return 1;			
+	}
+}
+
+void set_defaults(void) {
+	char param_value[LINE_MAX+1];
+	get_param("INSTR_SLICE", param_value);
+	instr_slice = atoi(param_value);
+
+	int heads, tracks, sectors;
+	char command[1000];
+	get_param("NUM_HEADS",param_value);
+	heads=atoi(param_value);
+	get_param("NUM_TRACKS",param_value);
+	tracks=atoi(param_value);
+	get_param("NUM_SECTORS",param_value);
+	sectors=atoi(param_value);
+	sprintf(command,"dd if=/dev/zero of=disk.img bs=%dx%dx%db count=1",heads,tracks,sectors);
+	system(command);
+}
+
+void install_signals(void){
+	signal(SIGINT, &sim_signal_handler);
+    	signal(SIGABRT, &sim_signal_handler);
+    	signal(SIGFPE, &sim_signal_handler);
+    	signal(SIGUSR2, &sim_signal_handler);
+}
+
+void boot(void) {
+	// to install system calls
+	install_signals();
+	set_defaults();
+}
+
 
 ////char   myargv[2][200];
 char user_prog_path[200];

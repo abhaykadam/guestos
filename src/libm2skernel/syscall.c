@@ -38,28 +38,6 @@
 #include <linux/unistd.h>
 
 
-/* Following is the declaration of function pointers required for system 
-calls provided by guest os.Line before each function pointer declaration 
-explains its use . More can be added as per need*/
-
-// Use guestf_pointer1 when system call takes no parameter//
-int (*guestf_pointer1[5])(void);
-
-/* Use guestf_pointer2 when system call takes 1 parameter. This parameter's data
- type will be excluding basic types such as integer,char . It can be an
-address (e.g string,array,any other pointer) which will be treated as address
- location in simulated memory */
-int (*guestf_pointer2[5])(uint32_t);
-
-// Use guestf_pointer3 when system call takes single integer parameter//
-int (*guestf_pointer3[5])(int);
-
-/* Use guestf_pointer4 when system call takes 2 parameters. These parameter's data
- type will be excluding basic types such as integer,char . It can be an
-address (e.g string,array,any other pointer) which will be treated as address
- location in simulated memory */
-int (*guestf_pointer4[5])(uint32_t, uint32_t);
-
 int syscall_debug_category;
 
 static char *syscall_name[] = {
@@ -834,7 +812,11 @@ void syscall_summary() {
 #define RETVAL(X) { retval = (X); if (retval == -1) retval = -errno; }
 //unsigned int myarr[10];
 
+
+
 /*  Following are the functions which implement systemcalls provided by guest os*/
+
+
 
 int guestos1()// for system call no 400
 {
