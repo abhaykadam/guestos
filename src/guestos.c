@@ -173,7 +173,7 @@ void set_defaults(void) {
 	tracks=atoi(param_value);
 	get_param("NUM_SECTORS",param_value);
 	sectors=atoi(param_value);
-	sprintf(command,"dd if=/dev/zero of=Sim_disk bs=%dx%dx%db count=1",heads,tracks,sectors);
+	sprintf(command,"(dd if=/dev/zero of=Sim_disk bs=%dx%dx%db count=1) 2> /dev/zero",heads,tracks,sectors);
 	system(command);
 }
 

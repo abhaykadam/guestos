@@ -815,103 +815,19 @@ void syscall_summary() {
 
 
 /*  Following are the functions which implement systemcalls provided by guest os*/
-
-
-
-int guestos1()// for system call no 400
-{
-    printf("\n Inside sytem call Number:400\n\n");
-    printf("\n ********This is the first system call provided by guest os******");
-    printf("\n This system call does not have any other parameter other than sytem call number");
-    printf("\n hello to world!!!!!!!");
-    return 0;
+int get_pid() {
+	return isa_ctx->pid;
 }
 
-int guestos2(uint32_t ipstring) // For system call number 401
-{
-    printf("\n Inside system call number:401\n\n");
-    char strtoprint[80];
-
-    int len = mem_read_string(isa_mem, ipstring, MAX_PATH_SIZE, strtoprint);
-
-    printf("\n\n ********This is a system call provided by guest os******");
-    printf("\nThis system call takes 1 parameter other than systemcall number.");
-    printf("\n The parameter string is %s \n", strtoprint);
-    return 0;
-}
-
-int guestos3() // For system call number 402
-{
-    printf("\n Inside system call number:402\n\n");
-    printf("\n trying to execute 'ls' command:\n\n");
-    // system("ls");
-    printf("\n\n ********This is a system call provided by guest os******\n");
-    //printf("\nThis system call takes 1 parameter other than systemcall number.");
-
-    return syscall(326, "ls .");
-}
-
-int guestos4(uint32_t path) // For system call number 403
-{
-    printf("\n Inside system call number:403\n\n");
-    printf("\n trying to execute 'ls' command for given path:\n\n");
-    char givenpath[MAX_PATH_SIZE];
-
-    int length = mem_read_string(isa_mem, path, MAX_PATH_SIZE, givenpath);
-    if (length >= MAX_PATH_SIZE)
-        fatal("syscall open: maximum path length exceeded");
-    char temp[512];
-    sprintf(temp, "ls -al %s", givenpath);
-    return syscall(326, temp);
-}
-
-int guestos5(void) {
-    printf("\n Inside system call number:403\n\n");
-    printf("\n trying to execute 'pwd' command for current path:\n\n");
-
-    return syscall(326, "pwd");
-}
-
-void handle_guest_syscalls() {
+int handle_guest_syscalls() {
     int syscode = isa_regs->eax;
     int retval = 0;
     switch (syscode) {
-        case syscall_code_guestos1:
-
-        {
-            retval = guestos1();
-            break;
-        }
-        case syscall_code_guestos2:
-
-        {
-            uint32_t ipstring = isa_regs->ebx;
-            retval = guestos2(ipstring);
-            break;
-        }
-        case syscall_code_guestos3:
-
-        {
-            retval = guestos3();
-            break;
-        }
-        case syscall_code_guestos4:
-        {
-
-            uint32_t path = isa_regs->ebx;
-            retval = guestos4(path);
-            //retval=guestos4(path);
-            /* Return */
-            break;
-        }
-
-        case syscall_code_guestos5:
-
-        {
-            retval = guestos5();
-            break;
-        }
-
+	case syscall_code_get_pid:
+	{
+		retval=get_pid();
+		break;
+	}
 
         default:
             if (syscode >= syscall_code_count) {
@@ -923,6 +839,8 @@ void handle_guest_syscalls() {
             }
 
     }
+
+	return retval;
 }
 
 /* Simulation of system calls.
@@ -933,7 +851,7 @@ void syscall_do() {
     int syscode = isa_regs->eax;
     int retval = 0;
     if (syscode > 325) {
-        handle_guest_syscalls();
+        retval = handle_guest_syscalls();
     } else // Pass system call to host os
     {
 
@@ -3673,9 +3591,9 @@ void syscall_do() {
                 }
         }
 
-        /* Return value (for all system calls except 'sigreturn') */
+      }
+	 /* Return value (for all system calls except 'sigreturn') */
         if (syscode != syscall_code_sigreturn && !ctx_get_status(isa_ctx, ctx_suspended))
             isa_regs->eax = retval;
-    }
 }
 
