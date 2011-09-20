@@ -490,6 +490,9 @@ void ld_load_prog_from_ctxconfig(char *ctxconfig)
 		/* Arguments and environment variables */
 		exe = config_read_string(config, section, "exe", "");
 		lnlist_add(ld->args, strdup(exe));
+		
+		ctx->uid= atoi(config_read_string(config, section, "uid", ""));
+
 		ld_add_args_string(ctx,
 			config_read_string(config, section, "args", ""));
 		ld_add_environ(ctx,

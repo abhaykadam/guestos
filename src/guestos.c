@@ -329,6 +329,7 @@ void shell() {
     FILE *f_in;
     char temp[400];
     char user_prog_path[400];
+    int uid;
     printf("\n Shell begins:\n");
     printf("\n guestos:\n");
     fflush(stdin);
@@ -341,12 +342,15 @@ void shell() {
         //fgets(user_prog_path,max_path_length,stdin);
         //gets(user_prog_path);
         scanf("%s", user_prog_path);
+	printf ("Enter Uid for process: ");
+	scanf("%d", &uid);
         printf("\n The entered file path is : %s", user_prog_path);
         sprintf(temp, "\n[ Context %d ]", i);
         fputs(temp, f_in);
         sprintf(temp, "\nExe = %s\n", user_prog_path);
         fputs(temp, f_in);
-
+	sprintf(temp, "\nUid = %d\n", uid);
+        fputs(temp, f_in);
     }
     configfile = "configfile";
     fclose(f_in);

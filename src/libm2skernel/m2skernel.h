@@ -531,6 +531,7 @@ struct ctx_t {
 	struct signal_handlers_t *signal_handlers;
 
 	int instr_slice;
+	int uid;
 };
 
 enum ctx_status_enum {
