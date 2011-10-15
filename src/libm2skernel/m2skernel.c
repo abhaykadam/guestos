@@ -85,18 +85,21 @@ void ke_done(void)
 }
 
 
-/* Execute one instruction from each running context. */
+/* Execute prespecified instruction from each running context. */
 void ke_run(void)
 {
-	struct ctx_t *ctx;
+	struct ctx_t *ctx, *ctx_trav; 
+	int flag = 0;
 
-	/* Run an instruction from every running process */
+	/* Run ctx->instr_silce instructions from every running process */
 	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next) {
 		int i;
+		
 		for ( i = 0 ; i < ctx->instr_slice ; ++i) {
 			ctx_execute_inst(ctx);
-			if (ctx!=ke->running_list_head)
-				break;
+			
+			if ( ctx_get_status ( ctx, ctx_finished ))
+				break;		
 		}
 	}
 	
