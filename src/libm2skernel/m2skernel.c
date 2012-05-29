@@ -89,7 +89,6 @@ void ke_done(void)
 void ke_run(void)
 {
 	struct ctx_t *ctx, *ctx_trav; 
-	int flag = 0;
 
 	/* Run ctx->instr_silce instructions from every running process */
 	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next) {
