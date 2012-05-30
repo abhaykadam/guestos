@@ -59,7 +59,8 @@ guestos_DEPENDENCIES =  \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a
 am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	dispatch.$(OBJEXT) fetch.$(OBJEXT) fu.$(OBJEXT) \
 	issue.$(OBJEXT) m2s.$(OBJEXT) processor.$(OBJEXT) \
@@ -78,7 +79,8 @@ m2s_DEPENDENCIES = $(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a
 am_m2s_fast_OBJECTS = guestos.$(OBJEXT)
 m2s_fast_OBJECTS = $(am_m2s_fast_OBJECTS)
 m2s_fast_LDADD = $(LDADD)
@@ -93,7 +95,8 @@ m2s_fast_DEPENDENCIES =  \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a
 am_m2s_objdump_OBJECTS = m2s-objdump.$(OBJEXT)
 m2s_objdump_OBJECTS = $(am_m2s_objdump_OBJECTS)
 m2s_objdump_LDADD = $(LDADD)
@@ -108,7 +111,8 @@ m2s_objdump_DEPENDENCIES =  \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -264,7 +268,8 @@ SUBDIRS = \
 	libnetwork \
 	libcachesystem \
 	libgpukernel \
-	libgpudisasm
+	libgpudisasm \
+	libfs
 
 m2s_fast_SOURCES = \
 	guestos.c
@@ -302,7 +307,8 @@ INCLUDES = -I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libnetwork \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libgpudisasm
+	-I$(top_srcdir)/src/libgpudisasm \
+	-I$(top_srcdir)/src/libfs 
 
 LDADD = \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
@@ -316,6 +322,7 @@ LDADD = \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32

@@ -9,7 +9,8 @@ SUBDIRS = \
 	libnetwork \
 	libcachesystem \
 	libgpukernel \
-	libgpudisasm
+	libgpudisasm \
+	libfs
 
 bin_PROGRAMS = \
 	m2s-fast \
@@ -54,7 +55,8 @@ INCLUDES = -I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libnetwork \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libgpudisasm
+	-I$(top_srcdir)/src/libgpudisasm \
+	-I$(top_srcdir)/src/libfs 
 
 LDADD = \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
@@ -68,6 +70,7 @@ LDADD = \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libmhandle/libfs.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32

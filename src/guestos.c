@@ -24,6 +24,9 @@
 #include <string.h>
 #include <limits.h>
 #include <stdio.h>
+#include <fs.h>
+
+struct super_block_sb;
 
 /* Multi2Sim version */
 #ifndef VERSION
