@@ -5347,7 +5347,7 @@ if test "x$ac_cv_lib_pthread_pthread_create" = xyes; then :
 fi
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile src/libnetwork/Makefile src/libgpukernel/Makefile src/libgpudisasm/Makefile src/libcachesystem/Makefile src/libm2skernel/Makefile src/libdisasm/Makefile src/libesim/Makefile src/libmhandle/Makefile src/libopt/Makefile src/libstruct/Makefile src/libmisc/Makefile src/libfs/Makefile src/libutils/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile src/libnetwork/Makefile src/libgpukernel/Makefile src/libgpudisasm/Makefile src/libcachesystem/Makefile src/libm2skernel/Makefile src/libdisasm/Makefile src/libesim/Makefile src/libmhandle/Makefile src/libopt/Makefile src/libstruct/Makefile src/libmisc/Makefile src/libutils/Makefile src/libfs/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6112,8 +6112,8 @@ do
     "src/libopt/Makefile") CONFIG_FILES="$CONFIG_FILES src/libopt/Makefile" ;;
     "src/libstruct/Makefile") CONFIG_FILES="$CONFIG_FILES src/libstruct/Makefile" ;;
     "src/libmisc/Makefile") CONFIG_FILES="$CONFIG_FILES src/libmisc/Makefile" ;;
-    "src/libfs/Makefile") CONFIG_FILES="$CONFIG_FILES src/libfs/Makefile" ;;
     "src/libutils/Makefile") CONFIG_FILES="$CONFIG_FILES src/libutils/Makefile" ;;
+    "src/libfs/Makefile") CONFIG_FILES="$CONFIG_FILES src/libfs/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

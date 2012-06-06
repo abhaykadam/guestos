@@ -39,6 +39,7 @@
 #include <poll.h>
 #include <errno.h>
 #include <gpukernel.h>
+#include <fdtable.h>
 #include <sys/time.h>
 
 
@@ -530,6 +531,9 @@ struct ctx_t {
 	struct signal_masks_t *signal_masks;
 	struct signal_handlers_t *signal_handlers;
 
+	struct fs_struct *fs; 	/* filesystem information */
+	struct files_struct *files; /*Open file information */
+	
 	int instr_slice;
 	int uid;
 };

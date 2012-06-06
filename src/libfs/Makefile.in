@@ -68,7 +68,8 @@ AR = ar
 ARFLAGS = cru
 libfs_a_AR = $(AR) $(ARFLAGS)
 libfs_a_LIBADD =
-am_libfs_a_OBJECTS = inode.$(OBJEXT)
+am_libfs_a_OBJECTS = inode.$(OBJEXT) namei.$(OBJEXT) file.$(OBJEXT) \
+	file_table.$(OBJEXT)
 libfs_a_OBJECTS = $(am_libfs_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -179,10 +180,17 @@ libfs_a_SOURCES = fs.h \
 		mount.h \
 		dcache.h \
 		filesystems.h \
-		inode.c 
+		fdtable.h \
+		path.h \
+		namei.h \
+		fs_struct.h \
+		inode.c \
+		namei.c \
+		file.c \
+		file_table.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
-INCLUDES = -I$(top_srcdir)/src/libutils
+INCLUDES = -I$(top_srcdir)/src/libutils/
 all: all-am
 
 .SUFFIXES:
@@ -260,7 +268,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_table.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/namei.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

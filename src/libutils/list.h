@@ -27,4 +27,13 @@ static inline void INIT_LIST_HEAD(struct list_head *list)
 	list->prev = list;
 }
 
+/*
+ * list_empty - tests whether list is empty
+ * @head: the list to test
+ */
+
+static inline int list_empty(const struct list_head *head) {
+	return head-> next == head;
+}
+
 #endif
