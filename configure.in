@@ -45,5 +45,7 @@ AC_CONFIG_FILES([Makefile
 		 src/libmisc/Makefile
 		 src/libutils/Makefile
 		 src/libfs/Makefile
+		 src/libfs/hostfs/Makefile
+		 src/libfs/bfs/Makefile
 		 ])
 AC_OUTPUT

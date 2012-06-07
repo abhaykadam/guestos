@@ -11,7 +11,10 @@ struct vfsmount{
 	struct	dentry		*mnt_root;		/* Root of the mounted tree */
 	struct	super_block	*mnt_sb;		/* Pointer to superblock */
 	struct	list_head	*mnt_mounts;		/* List of children anchored  here */
+	int			mnt_flags;		/* Mount flags */
+	int			mnt_id;			/* Mount identifier */
 	char			*mnt_devname;		/* Name of device */
+	atomic_t		mnt_count;		/* Usage count */
 };
 
 #endif

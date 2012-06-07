@@ -4,12 +4,12 @@
 #include <fs.h>
 #include <rcupdate.h>
 #include <types.h>
-#include <limits.h>
+#include <inttypes.h>
 
 /*
  * The fd array needs to be BITS_PER_LONG
  */
-#define NR_OPEN_DEFAULT LONG_BIT
+#define NR_OPEN_DEFAULT UINTMAX_MAX
 
 /*struct fdtable {
 	unsigned int	max_fds;
