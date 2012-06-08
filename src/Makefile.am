@@ -1,17 +1,18 @@
 SUBDIRS = \
+	libfs \
+	libutils \
 	libmhandle \
 	libstruct \
 	libopt \
 	libmisc \
-	libutils \
-	libfs \
 	libm2skernel \
 	libdisasm \
 	libesim \
 	libnetwork \
 	libcachesystem \
 	libgpukernel \
-	libgpudisasm
+	libgpudisasm \
+	libintr
 
 bin_PROGRAMS = \
 	m2s-fast \
@@ -46,23 +47,24 @@ m2s_SOURCES = \
 	uop2.dat \
 	writeback.c
 
-INCLUDES = -I$(top_srcdir)/src/libmhandle \
+INCLUDES = -I$(top_srcdir)/src/libfs \
+	-I$(top_srcdir)/src/libutils \
+	-I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libopt \
 	-I$(top_srcdir)/src/libmisc \
-	-I$(top_srcdir)/src/libutils \
-	-I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libm2skernel \
 	-I$(top_srcdir)/src/libdisasm \
 	-I$(top_srcdir)/src/libesim \
 	-I$(top_srcdir)/src/libnetwork \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libgpudisasm
+	-I$(top_srcdir)/src/libgpudisasm \
+	-I$(top_srcdir)/src/libintr
 
 LDADD = \
-	$(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
         $(top_builddir)/src/libopt/libopt.a \
@@ -74,6 +76,7 @@ LDADD = \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32

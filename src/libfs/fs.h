@@ -1,8 +1,7 @@
 #ifndef FS_H
 #define FS_H
 
-#include <list.h>
-#include <rcupdate.h>
+#include <dlist.h>
 #include <types.h>
 #include <dcache.h>
 #include <mount.h>
@@ -44,8 +43,7 @@ struct super_block {
 struct super_operations {
 	struct inode *(*alloc_inode) (struct super_block *sb);
 	void (*destroy_inode) (struct inode *);
-	void (*dirty_inode) (struct inode *);
-	int (*write_inode) (struct inode *, int);
+	void (*write_inode) (struct inode *);
 	void (*drop_inode) (struct inode *);
 	void (*delete_inode) (struct inode *);
 	void (*put_super) (struct super_block *);

@@ -1,5 +1,6 @@
 AC_INIT
 AM_INIT_AUTOMAKE(multi2sim, 3.0.2)
+AM_PROG_AS
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
@@ -47,5 +48,6 @@ AC_CONFIG_FILES([Makefile
 		 src/libfs/Makefile
 		 src/libfs/hostfs/Makefile
 		 src/libfs/bfs/Makefile
+		 src/libintr/Makefile
 		 ])
 AC_OUTPUT

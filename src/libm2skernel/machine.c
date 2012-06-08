@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <isr.h>
+
 #include "m2skernel.h"
 
 #define DUMP_ABORT printf("\n%lld\n", (long long) isa_inst_count), abort()
@@ -331,8 +333,10 @@ void op_dec_ir32_impl() {
 void op_div_rm8_impl() {
 	uint16_t ax = isa_load_reg(reg_ax);
 	uint8_t rm8 = isa_load_rm8();
-	if (!rm8)
-		fatal("div_rm8: division by 0");
+	if (!rm8) {
+		(*isr_table[0])();
+		return ;
+	}
 	asm volatile(
 		"mov %1, %%ax\n\t"
 		"mov %2, %%bl\n\t"
@@ -350,8 +354,10 @@ void op_div_rm32_impl() {
 	uint32_t eax = isa_regs->eax;
 	uint32_t edx = isa_regs->edx;
 	uint32_t rm32 = isa_load_rm32();
-	if (!rm32)
-		fatal("div_rm32: division by 0");
+	if (!rm32) {	
+		(*isr_table[0])();
+		return;
+	}
 	asm volatile (
 		"mov %2, %%eax\n\t"
 		"mov %3, %%edx\n\t"
@@ -377,8 +383,10 @@ void op_idiv_rm32_impl() {
 	uint32_t eax = isa_regs->eax;
 	uint32_t edx = isa_regs->edx;
 	uint32_t rm32 = isa_load_rm32();
-	if (!rm32)
-		fatal("idiv_rm32: division by 0");
+	if (!rm32) {
+		(*isr_table[0])();
+		return ;
+	}
 	asm volatile (
 		"mov %2, %%eax\n\t"
 		"mov %3, %%edx\n\t"

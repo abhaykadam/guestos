@@ -3,7 +3,8 @@ SUBDIRS = \
 	hostfs
 
 lib_LIBRARIES = libfs.a
-libfs_a_SOURCES = fs.h \
+libfs_a_SOURCES = \
+		fs.h \
 		mount.h \
 		dcache.h \
 		fdtable.h \
@@ -17,5 +18,6 @@ libfs_a_SOURCES = fs.h \
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 
 INCLUDES = -I$(top_srcdir)/src/libutils \
-	   -I$(top_srcdir)/src/libfs/hostfs
+	   -I$(top_srcdir)/src/libfs/hostfs \
+	   -I$(top_srcdir)/src/libfs/bfs
 

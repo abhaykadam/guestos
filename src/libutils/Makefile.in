@@ -87,6 +87,9 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
+CCAS = @CCAS@
+CCASDEPMODE = @CCASDEPMODE@
+CCASFLAGS = @CCASFLAGS@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
@@ -172,8 +175,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LIBRARIES = libutils.a
-libutils_a_SOURCES = rcupdate.h list.h \
-			types.h
+libutils_a_SOURCES = \
+		rcupdate.h \
+		dlist.h \
+		types.h
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 all: all-am

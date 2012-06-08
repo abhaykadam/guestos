@@ -2,8 +2,6 @@
 #define MOUNT_H
 
 #include <fs.h>
-#include <dcache.h>
-#include <list.h>
 
 struct vfsmount{
 	struct	vfsmount	*mnt_parent;		/* FS we are mounted on */

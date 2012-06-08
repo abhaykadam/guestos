@@ -1,35 +1,38 @@
 #include <fs.h>
 #include <mount.h>
 
-struct file_system_type *fs_type_list=NULL;
+LIST_HEAD(fs_type_list);
 
-struct file_system_type hostfs_fs_type = {
+static struct super_block *get_host_sb(struct file_system_type *type, 
+	int flags, const char *dev_name, void *data);
+static void kill_host_sb(struct super_block *host_sb);
+
+const struct file_system_type hostfs_fs_type = {
 	.name		= "hostfs",
 	.get_sb		= get_host_sb,
 	.kill_sb	= kill_host_sb
 };
 
-static struct superblock hostfs_sb = {
+static const struct super_block hostfs_sb = {
 	.s_dev	= 0,
-	.s_type = hostfs_fs_type,
-	.s_id	= "hostfs",
+	.s_type = &hostfs_fs_type,
+	.s_id	= "hostfs"
 };
 
 int init_hostfs(void) {
-	int err=0
+	int err=0;
 	
-	fs_type_list=hostfs_fs_type;
-	INIT_LIST_HEAD(&hostfs_sb->s_list)
+	list_add_tail(&hostfs_sb.s_list, &fs_type_list);
 	
 	return err;
 }
 
-struct super_block *get_host_sb(struct file_system_type *type, 
+static struct super_block *get_host_sb(struct file_system_type *type, 
 	int flags, const char *dev_name, void *data) {
 
 	return &hostfs_sb;
 }
 
-void kill_host_sb(struct super_block *host_sb) {
-	
+static void kill_host_sb(struct super_block *host_sb) {
+		
 }

@@ -1,7 +1,8 @@
 lib_LIBRARIES = libbfs.a
 libbfs_a_SOURCES = \
-		bfs_super.h \
-		bfs_super.c
+		bfs_fs.h \
+		bfs_super.c \
+		bfs_fs_sb.h
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 

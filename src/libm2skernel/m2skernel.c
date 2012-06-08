@@ -88,7 +88,7 @@ void ke_done(void)
 /* Execute prespecified instruction from each running context. */
 void ke_run(void)
 {
-	struct ctx_t *ctx, *ctx_trav; 
+	struct ctx_t *ctx; 
 
 	/* Run ctx->instr_silce instructions from every running process */
 	for (ctx = ke->running_list_head; ctx; ctx = ctx->running_next) {

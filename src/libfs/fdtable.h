@@ -2,14 +2,12 @@
 #define FDTABLE_H
 
 #include <fs.h>
-#include <rcupdate.h>
-#include <types.h>
-#include <inttypes.h>
+#include <limits.h>
 
 /*
  * The fd array needs to be BITS_PER_LONG
  */
-#define NR_OPEN_DEFAULT UINTMAX_MAX
+#define NR_OPEN_DEFAULT SHRT_MAX
 
 /*struct fdtable {
 	unsigned int	max_fds;

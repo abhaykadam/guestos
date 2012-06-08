@@ -17,6 +17,7 @@ libm2skernel_a_SOURCES = m2skernel.h \
 	signal.c \
 	syscall.c \
 	syscall.dat
+
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
@@ -25,5 +26,11 @@ INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmisc \
 	-I$(top_srcdir)/src/libdisasm \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libfs
+	-I$(top_srcdir)/src/libfs \
+	-I$(top_srcdir)/src/libutils \
+	-I$(top_srcdir)/src/libintr
+
+
+
+
 

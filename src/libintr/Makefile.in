@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = src/libcachesystem
+subdir = src/libintr
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
@@ -66,11 +66,10 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LIBRARIES = $(lib_LIBRARIES)
 AR = ar
 ARFLAGS = cru
-libcachesystem_a_AR = $(AR) $(ARFLAGS)
-libcachesystem_a_LIBADD =
-am_libcachesystem_a_OBJECTS = cache.$(OBJEXT) cachesystem.$(OBJEXT) \
-	directory.$(OBJEXT) mmu.$(OBJEXT) moesi.$(OBJEXT)
-libcachesystem_a_OBJECTS = $(am_libcachesystem_a_OBJECTS)
+libintr_a_AR = $(AR) $(ARFLAGS)
+libintr_a_LIBADD =
+am_libintr_a_OBJECTS = isr.$(OBJEXT) intr.$(OBJEXT)
+libintr_a_OBJECTS = $(am_libintr_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -79,8 +78,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libcachesystem_a_SOURCES)
-DIST_SOURCES = $(libcachesystem_a_SOURCES)
+SOURCES = $(libintr_a_SOURCES)
+DIST_SOURCES = $(libintr_a_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -178,21 +177,22 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LIBRARIES = libcachesystem.a
-libcachesystem_a_SOURCES = cachesystem.h \
-	cache.c \
-	cachesystem.c \
-	directory.c \
-	mmu.c \
-	moesi.c
+lib_LIBRARIES = libintr.a
+libintr_a_SOURCES = \
+		isr.h \
+		isr.c \
+		intr.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
-INCLUDES = -I$(top_srcdir)/src/libstruct \
+INCLUDES = \
+	-I$(top_srcdir)/src/libm2skernel \
 	-I$(top_srcdir)/src/libmhandle \
-	-I$(top_srcdir)/src/libnetwork \
-	-I$(top_srcdir)/src/libopt \
-	-I$(top_srcdir)/src/libesim \
-	-I$(top_srcdir)/src/libmisc
+	-I$(top_srcdir)/src/libstruct \
+	-I$(top_srcdir)/src/libmisc \
+	-I$(top_srcdir)/src/libdisasm \
+	-I$(top_srcdir)/src/libgpukernel \
+	-I$(top_srcdir)/src/libfs \
+	-I$(top_srcdir)/src/libutils
 
 all: all-am
 
@@ -207,9 +207,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/libcachesystem/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/libintr/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/libcachesystem/Makefile
+	  $(AUTOMAKE) --gnu src/libintr/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -260,10 +260,10 @@ uninstall-libLIBRARIES:
 
 clean-libLIBRARIES:
 	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
-libcachesystem.a: $(libcachesystem_a_OBJECTS) $(libcachesystem_a_DEPENDENCIES) 
-	-rm -f libcachesystem.a
-	$(libcachesystem_a_AR) libcachesystem.a $(libcachesystem_a_OBJECTS) $(libcachesystem_a_LIBADD)
-	$(RANLIB) libcachesystem.a
+libintr.a: $(libintr_a_OBJECTS) $(libintr_a_DEPENDENCIES) 
+	-rm -f libintr.a
+	$(libintr_a_AR) libintr.a $(libintr_a_OBJECTS) $(libintr_a_LIBADD)
+	$(RANLIB) libintr.a
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -271,11 +271,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cache.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cachesystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/directory.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmu.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moesi.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/intr.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/isr.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

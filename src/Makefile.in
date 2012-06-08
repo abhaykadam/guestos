@@ -48,8 +48,8 @@ PROGRAMS = $(bin_PROGRAMS)
 guestos_SOURCES = guestos.c
 guestos_OBJECTS = guestos.$(OBJEXT)
 guestos_LDADD = $(LDADD)
-guestos_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
-	$(top_builddir)/src/libfs/libfs.a \
+guestos_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
 	$(top_builddir)/src/libopt/libopt.a \
@@ -60,7 +60,8 @@ guestos_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	dispatch.$(OBJEXT) fetch.$(OBJEXT) fu.$(OBJEXT) \
 	issue.$(OBJEXT) m2s.$(OBJEXT) processor.$(OBJEXT) \
@@ -69,8 +70,8 @@ am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	writeback.$(OBJEXT)
 m2s_OBJECTS = $(am_m2s_OBJECTS)
 m2s_LDADD = $(LDADD)
-m2s_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
-	$(top_builddir)/src/libfs/libfs.a \
+m2s_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
 	$(top_builddir)/src/libopt/libopt.a \
@@ -81,12 +82,13 @@ m2s_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_fast_OBJECTS = guestos.$(OBJEXT)
 m2s_fast_OBJECTS = $(am_m2s_fast_OBJECTS)
 m2s_fast_LDADD = $(LDADD)
-m2s_fast_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
-	$(top_builddir)/src/libfs/libfs.a \
+m2s_fast_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
 	$(top_builddir)/src/libopt/libopt.a \
@@ -97,12 +99,13 @@ m2s_fast_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_objdump_OBJECTS = m2s-objdump.$(OBJEXT)
 m2s_objdump_OBJECTS = $(am_m2s_objdump_OBJECTS)
 m2s_objdump_LDADD = $(LDADD)
-m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
-	$(top_builddir)/src/libfs/libfs.a \
+m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
 	$(top_builddir)/src/libopt/libopt.a \
@@ -113,7 +116,8 @@ m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libnetwork/libnetwork.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a
+	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -174,6 +178,9 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
+CCAS = @CCAS@
+CCASDEPMODE = @CCASDEPMODE@
+CCASFLAGS = @CCASFLAGS@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
@@ -259,19 +266,20 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = \
+	libfs \
+	libutils \
 	libmhandle \
 	libstruct \
 	libopt \
 	libmisc \
-	libutils \
-	libfs \
 	libm2skernel \
 	libdisasm \
 	libesim \
 	libnetwork \
 	libcachesystem \
 	libgpukernel \
-	libgpudisasm
+	libgpudisasm \
+	libintr
 
 m2s_fast_SOURCES = \
 	guestos.c
@@ -299,23 +307,24 @@ m2s_SOURCES = \
 	uop2.dat \
 	writeback.c
 
-INCLUDES = -I$(top_srcdir)/src/libmhandle \
+INCLUDES = -I$(top_srcdir)/src/libfs \
+	-I$(top_srcdir)/src/libutils \
+	-I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libopt \
 	-I$(top_srcdir)/src/libmisc \
-	-I$(top_srcdir)/src/libutils \
-	-I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libm2skernel \
 	-I$(top_srcdir)/src/libdisasm \
 	-I$(top_srcdir)/src/libesim \
 	-I$(top_srcdir)/src/libnetwork \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libgpudisasm
+	-I$(top_srcdir)/src/libgpudisasm \
+	-I$(top_srcdir)/src/libintr
 
 LDADD = \
-	$(top_builddir)/src/libmhandle/libutils.a \
 	$(top_builddir)/src/libfs/libfs.a \
+	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
         $(top_builddir)/src/libopt/libopt.a \
@@ -327,6 +336,7 @@ LDADD = \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
+	$(top_builddir)/src/libintr/libintr.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32

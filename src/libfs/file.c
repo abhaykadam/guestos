@@ -1,7 +1,7 @@
 #include <fs.h>
 #include <fdtable.h>
 
-struct file *get_empty_filp(void) {
+/*struct file *get_empty_filp(void) {
 	struct files_struct *files = isa_ctx->files;
 	int error;
 
@@ -12,4 +12,4 @@ struct file *get_empty_filp(void) {
 	}
 
 	return NULL;
-}
+}*/

@@ -95,6 +95,9 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
+CCAS = @CCAS@
+CCASDEPMODE = @CCASDEPMODE@
+CCASFLAGS = @CCASFLAGS@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
@@ -206,7 +209,9 @@ INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmisc \
 	-I$(top_srcdir)/src/libdisasm \
 	-I$(top_srcdir)/src/libgpukernel \
-	-I$(top_srcdir)/src/libfs
+	-I$(top_srcdir)/src/libfs \
+	-I$(top_srcdir)/src/libutils \
+	-I$(top_srcdir)/src/libintr
 
 all: all-am
 

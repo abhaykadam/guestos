@@ -40,6 +40,7 @@
 #include <errno.h>
 #include <gpukernel.h>
 #include <fdtable.h>
+#include <dlist.h>
 #include <sys/time.h>
 
 

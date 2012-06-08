@@ -25,6 +25,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <fs.h>
+#include <isr.h>
 
 struct super_block_sb;
 
@@ -233,6 +234,7 @@ int main(int argc, char **argv) {
     ke_init();
     
 	boot();
+	init_ivt();
 
     /////	install_sighandler();
     //	printf("\n enter path:");

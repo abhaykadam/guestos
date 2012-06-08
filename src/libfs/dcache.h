@@ -2,9 +2,6 @@
 #define DCACHE_H
 
 #include <fs.h>
-#include <list.h>
-#include <rcupdate.h>
-#include <types.h>
 #include <stdbool.h>
 
 /*
