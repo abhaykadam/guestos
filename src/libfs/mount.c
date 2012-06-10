@@ -1,7 +1,7 @@
 #include <fs.h>
 #include <mount.h>
 
-LIST_HEAD(fs_type_list);
+LIST_HEAD(super_blocks);
 
 static struct super_block *get_host_sb(struct file_system_type *type, 
 	int flags, const char *dev_name, void *data);
@@ -22,7 +22,7 @@ static const struct super_block hostfs_sb = {
 int init_hostfs(void) {
 	int err=0;
 	
-	list_add_tail(&hostfs_sb.s_list, &fs_type_list);
+	list_add_tail(&hostfs_sb.s_list, &super_blocks);
 	
 	return err;
 }
