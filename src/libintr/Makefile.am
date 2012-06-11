@@ -1,6 +1,8 @@
 lib_LIBRARIES = libintr.a
 libintr_a_SOURCES = \
+		pic.h \
 		isr.h \
+		pic.c \
 		isr.c \
 		intr.c
 

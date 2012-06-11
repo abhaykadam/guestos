@@ -68,7 +68,7 @@ AR = ar
 ARFLAGS = cru
 libintr_a_AR = $(AR) $(ARFLAGS)
 libintr_a_LIBADD =
-am_libintr_a_OBJECTS = isr.$(OBJEXT) intr.$(OBJEXT)
+am_libintr_a_OBJECTS = pic.$(OBJEXT) isr.$(OBJEXT) intr.$(OBJEXT)
 libintr_a_OBJECTS = $(am_libintr_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -179,7 +179,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LIBRARIES = libintr.a
 libintr_a_SOURCES = \
+		pic.h \
 		isr.h \
+		pic.c \
 		isr.c \
 		intr.c
 
@@ -273,6 +275,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/intr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/isr.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pic.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -49,5 +49,6 @@ AC_CONFIG_FILES([Makefile
 		 src/libfs/hostfs/Makefile
 		 src/libfs/bfs/Makefile
 		 src/libintr/Makefile
+		 src/libbio/Makefile
 		 ])
 AC_OUTPUT

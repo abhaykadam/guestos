@@ -18,6 +18,7 @@
  */
 
 #include <isr.h>
+#include <pthread.h>
 
 #include "m2skernel.h"
 

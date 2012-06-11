@@ -45,8 +45,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-guestos_SOURCES = guestos.c
-guestos_OBJECTS = guestos.$(OBJEXT)
+am_guestos_OBJECTS = guestos.$(OBJEXT)
+guestos_OBJECTS = $(am_guestos_OBJECTS)
 guestos_LDADD = $(LDADD)
 guestos_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
@@ -61,7 +61,8 @@ guestos_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a
+	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a
 am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	dispatch.$(OBJEXT) fetch.$(OBJEXT) fu.$(OBJEXT) \
 	issue.$(OBJEXT) m2s.$(OBJEXT) processor.$(OBJEXT) \
@@ -83,7 +84,8 @@ m2s_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a
+	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a
 am_m2s_fast_OBJECTS = guestos.$(OBJEXT)
 m2s_fast_OBJECTS = $(am_m2s_fast_OBJECTS)
 m2s_fast_LDADD = $(LDADD)
@@ -100,7 +102,8 @@ m2s_fast_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a
+	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a
 am_m2s_objdump_OBJECTS = m2s-objdump.$(OBJEXT)
 m2s_objdump_OBJECTS = $(am_m2s_objdump_OBJECTS)
 m2s_objdump_LDADD = $(LDADD)
@@ -117,7 +120,8 @@ m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a
+	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -126,9 +130,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = guestos.c $(m2s_SOURCES) $(m2s_fast_SOURCES) \
+SOURCES = $(guestos_SOURCES) $(m2s_SOURCES) $(m2s_fast_SOURCES) \
 	$(m2s_objdump_SOURCES)
-DIST_SOURCES = guestos.c $(m2s_SOURCES) $(m2s_fast_SOURCES) \
+DIST_SOURCES = $(guestos_SOURCES) $(m2s_SOURCES) $(m2s_fast_SOURCES) \
 	$(m2s_objdump_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
@@ -279,7 +283,11 @@ SUBDIRS = \
 	libcachesystem \
 	libgpukernel \
 	libgpudisasm \
-	libintr
+	libintr \
+	libbio
+
+guestos_SOURCES = \
+	guestos.c
 
 m2s_fast_SOURCES = \
 	guestos.c
@@ -320,7 +328,8 @@ INCLUDES = -I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
 	-I$(top_srcdir)/src/libgpudisasm \
-	-I$(top_srcdir)/src/libintr
+	-I$(top_srcdir)/src/libintr \
+	-I$(top_srcdir)/src/libbio
 
 LDADD = \
 	$(top_builddir)/src/libfs/libfs.a \
@@ -337,6 +346,7 @@ LDADD = \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
 	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32

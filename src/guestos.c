@@ -26,8 +26,7 @@
 #include <stdio.h>
 #include <fs.h>
 #include <isr.h>
-
-struct super_block_sb;
+#include <dctrl.h>
 
 /* Multi2Sim version */
 #ifndef VERSION
@@ -64,6 +63,9 @@ static uint64_t sim_inst = 0;
 /* Variables */
 static int sigint_received = 0;
 extern int instr_slice;
+
+/* Disk controller structure */
+struct dctrl dc;
 
 //int max_path_length = 100;
 void shell();
@@ -192,6 +194,8 @@ void boot(void) {
 	// to install system calls
 	install_signals();
 	set_defaults();
+	init_pic();
+	init_disk_controller(&dc);
 }
 
 
@@ -323,10 +327,17 @@ int main(int argc, char **argv) {
 
     /* Finalization */
     ke_done();
+
+    shutdown();
+
     ///opt_done();
     ///debug_done();
     mhandle_done();
-    return 0;
+    pthread_exit(NULL);
+}
+
+void shutdown(void) {
+	close_disk_controller(&dc);
 }
 
 void shell() {

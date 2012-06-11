@@ -12,13 +12,17 @@ SUBDIRS = \
 	libcachesystem \
 	libgpukernel \
 	libgpudisasm \
-	libintr
+	libintr \
+	libbio
 
 bin_PROGRAMS = \
 	m2s-fast \
 	m2s-objdump \
 	m2s \
 	guestos 
+
+guestos_SOURCES = \
+	guestos.c
 
 m2s_fast_SOURCES = \
 	guestos.c
@@ -60,7 +64,8 @@ INCLUDES = -I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
 	-I$(top_srcdir)/src/libgpudisasm \
-	-I$(top_srcdir)/src/libintr
+	-I$(top_srcdir)/src/libintr \
+	-I$(top_srcdir)/src/libbio
 
 LDADD = \
 	$(top_builddir)/src/libfs/libfs.a \
@@ -77,6 +82,7 @@ LDADD = \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
 	$(top_builddir)/src/libintr/libintr.a \
+	$(top_builddir)/src/libbio/libbio.a \
 	-lm -lpthread
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
