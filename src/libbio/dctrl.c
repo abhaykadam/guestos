@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <bio.h>
 #include <pic.h>
+#include <stdbool.h>
 
 int init_disk_controller(struct dctrl *dc) {
 	int rc;
@@ -38,29 +39,30 @@ static void *disk_controller(void *a_dc) {
 	signal(SIGTERM, dcontroller_terminate);
 
 	struct dctrl *dc = (struct dctrl *)a_dc;
-	pthread_mutex_lock(&dc->dc_mutex);
+
+	while (true) {
+		pthread_mutex_lock(&dc->dc_mutex);
 	
-	/* registers the handles for the i/o operations */	
-	dc->dc_bio->bi_ops = &biops;
-	struct bio_operations *io = dc->dc_bio->bi_ops;
+		/* registers the handles for the i/o operations */	
+		dc->dc_bio->bi_ops = &biops;
+		struct bio_operations *io = dc->dc_bio->bi_ops;
+	
+		/* wait for i/o request from the kernel */
+		pthread_cond_wait( &dc->dc_io_req, &dc->dc_mutex);
+	
+		/* if the kernel asked to read something */
+		if (dc->dc_bio->bi_type == BI_read)
+			(io->read_block)(dc->dc_bio);
+	
+		/* if the kernel asked to write something */
+		if (dc->dc_bio->bi_type == BI_write)
+			(io->write_block)(dc->dc_bio);
+	
+		raise_intr(__NR_disk_irq);
 
-	/* wait for i/o request from the kernel */
-	pthread_cond_wait( &dc->dc_io_req, &dc->dc_mutex);
+		pthread_mutex_unlock(&dc->dc_mutex);
+	}
 
-	/* if the kernel asked to read something */
-	if (dc->dc_bio->bi_type == BI_read)
-		(io->read_block)(dc->dc_bio);
-
-	/* if the kernel asked to write something */
-	if (dc->dc_bio->bi_type == BI_write)
-		(io->write_block)(dc->dc_bio);
-
-	raise_intr(__NR_disk_irq);
-
-	pthread_mutex_unlock(&dc->dc_mutex);
-
-	/* currently does nothing, so the sleep() */
-	sleep();	
 
 	pthread_exit(NULL);
 }
