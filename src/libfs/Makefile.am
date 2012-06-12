@@ -13,7 +13,8 @@ libfs_a_SOURCES = \
 		fs_struct.h \
 		inode.c \
 		file.c \
-		mount.c
+		mount.c \
+		buffer_head.h
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 

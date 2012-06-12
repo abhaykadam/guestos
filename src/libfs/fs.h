@@ -18,7 +18,7 @@ struct block_device{
 	dev_t			bd_dev;
 	struct super_block	*bd_super;
 	unsigned		bd_block_size;
-	void			*bd_info;
+	const char		*bd_name;
 };
 
 struct super_block {

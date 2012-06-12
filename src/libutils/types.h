@@ -21,4 +21,10 @@ static inline int atomic_read(const atomic_t *v) {
 	return (*(volatile int *)&(v)->counter);
 }
 
+/*
+ * The type is used for indexing on 
+ * a disk or disk partition
+ */;
+typedef unsigned long sector_t;
+
 #endif
