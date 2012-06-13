@@ -18,4 +18,7 @@ static inline struct bfs_inode_info *BFS_I(struct inode *inode) {
 extern struct bfs_inode *bfs_get_inode(struct super_block *sb,
 	unsigned long ino, struct buffer_head *bh);
 
+extern inline void inode_copy (struct bfs_inode *dest, 
+	struct bfs_inode *src);
+
 #endif

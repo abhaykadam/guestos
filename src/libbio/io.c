@@ -10,7 +10,7 @@ static void __kbuffer_io(struct bio *bio) {
 
 	dc.dc_bio = bio;
 	dc.dc_bdev = bio->bi_bdev;
-	dc.dc_bio->finished = false;
+	dc.dc_bio->bi_finished = false;
 
 	/* signal disk conroller to start the i/o */
 	pthread_cond_signal(&dc.dc_io_req);
@@ -21,7 +21,7 @@ static void __kbuffer_io(struct bio *bio) {
 	tried too many times to avoid this.
 	but, finally!
 	*/
-	while (dc.dc_bio->bi->finished==false)
+	while (dc.dc_bio->bi_finished==false)
 		;
 }
 

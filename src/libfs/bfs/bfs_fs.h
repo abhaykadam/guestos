@@ -35,7 +35,7 @@ struct bfs_inode {
 	uint32_t	i_blocks;			/* Number of data blocks of the file */
 	uint32_t	i_block[BFS_N_BLOCKS];		/* Pointers to data blocks */
 	uint32_t	i_reserved[12];			/* Padding to make size of bfs_inode 128 */	
-}
+};
 
 /*
  * Structure of a blocks group descriptor
@@ -84,19 +84,65 @@ enum {
 
 
 #include <bfs_fs_sb.h>
+
+/**
+ * Gets BFS superblock from VFS superblock
+ */
 static inline struct bfs_sb_info *BFS_SB(struct super_block *sb) {
 	return sb->s_fs_info;
 }
 
-#define BFS_BLOCK_SIZE(s)	(s->s_blocksize)
-#define BFS_INODE_SIZE(s)	(BFS_SB(s)->s_inode_size)
-#define BFS_ITABLE_FBLOCK(s)	(BFS_SB(s)->s_group_desc->bg_inode_table)
-#define BFS_INODES_PER_BLOCK(s)	(BFS_SB(s)->inodes_per_block)
+/**
+ * Gets BFS filesystem block's size
+ */
 
-#define BFS_BLOCKS_PER_GROUP(s)	(BFS_SB(s)->s_blocks_per_group)
-#define BFS_DESC_PER_BLOCK(s)	(BFS_SB(s)->s_desc_per_block)
-#define BFS_INODES_PER_GROUP(s)	(BFS_SB(s)->s_inodes_per_group)
-#define BFS_DESC_PER_BLOCK(s)	(BFS_BLOCK_SIZE(s) / sizeof (struct bfs_group_desc))
+static inline uint32_t BFS_BLOCK_SIZE(struct super_block *sb) {
+	return sb->s_blocksize;
+}
 
+/**
+ * Gets BFS inodes structure size
+ */
+static inline uint16_t BFS_INODE_SIZE(struct super_block *sb) {
+	return BFS_SB(sb)->s_inode_size;
+}
+
+/**
+ * Gets starting block address of inodes table
+ */
+static inline uint32_t BFS_ITABLE_FBLOCK(struct super_block *sb) {
+	struct bfs_group_desc *bfs_gd = (struct bfs_group_desc *)(BFS_SB(sb)->s_group_desc);
+	return bfs_gd->bg_inode_table;
+}
+
+/**
+ * Gets number of the inode objects per BFS block
+ */
+
+static inline uint32_t BFS_INODES_PER_BLOCK(struct super_block *sb) {
+	return (BFS_BLOCK_SIZE(sb)/BFS_INODE_SIZE(sb));
+}
+
+/**
+ * Gets the number of blocks per group
+ */
+static inline uint32_t BFS_BLOCKS_PER_GROUP(struct super_block *sb) {
+	return BFS_SB(sb)->s_blocks_per_group;
+}
+
+/**
+ * Gets the number of group descriptors per block
+ */
+
+static inline uint32_t BFS_DESC_PER_BLOCK(struct super_block *sb) {
+	return BFS_BLOCK_SIZE(sb) / sizeof (struct bfs_group_desc);
+}
+
+/**
+ * Gets the count of inodes per block group
+ */
+static inline uint32_t BFS_INODES_PER_GROUP(struct super_block *sb) {
+	return BFS_SB(sb)->s_inodes_per_group;
+}
 
 #endif

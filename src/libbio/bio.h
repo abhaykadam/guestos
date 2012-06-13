@@ -27,6 +27,6 @@ struct bio_operations {
 
 extern struct bio_operations biops;
 
-extern void buffer_io(struct bio *bio);
+extern void kbuffer_io(struct bio *bio);
 
 #endif
