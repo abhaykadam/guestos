@@ -68,7 +68,7 @@ AR = ar
 ARFLAGS = cru
 libbio_a_AR = $(AR) $(ARFLAGS)
 libbio_a_LIBADD =
-am_libbio_a_OBJECTS = dctrl.$(OBJEXT) bio.$(OBJEXT)
+am_libbio_a_OBJECTS = dctrl.$(OBJEXT) bio.$(OBJEXT) io.$(OBJEXT)
 libbio_a_OBJECTS = $(am_libbio_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -182,7 +182,8 @@ libbio_a_SOURCES = \
 		dctrl.h \
 		dctrl.c \
 		bio.h \
-		bio.c
+		bio.c \
+		io.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 INCLUDES = -I$(top_srcdir)/src/libintr \
@@ -268,6 +269,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dctrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/io.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

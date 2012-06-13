@@ -2,6 +2,7 @@
 #include <bitops.h>
 
 #define set_intr(nr,vec) (set_bit64(nr,vec))
+#define clear_intr(nr,vec) (clear_bit64(nr,vec))
 
 static inline bool irq_masked(intr) {
 	return intr >= __NR_INTR_MASK_MIN 

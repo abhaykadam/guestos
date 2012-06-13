@@ -68,7 +68,7 @@ AR = ar
 ARFLAGS = cru
 libbfs_a_AR = $(AR) $(ARFLAGS)
 libbfs_a_LIBADD =
-am_libbfs_a_OBJECTS = bfs_super.$(OBJEXT)
+am_libbfs_a_OBJECTS = bfs_super.$(OBJEXT) inode.$(OBJEXT)
 libbfs_a_OBJECTS = $(am_libbfs_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -181,11 +181,14 @@ lib_LIBRARIES = libbfs.a
 libbfs_a_SOURCES = \
 		bfs_fs.h \
 		bfs_super.c \
-		bfs_fs_sb.h
+		bfs_fs_sb.h \
+		bfs.h \
+		inode.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 INCLUDES = -I$(top_srcdir)/src/libutils \
-	   -I$(top_srcdir)/src/libfs
+	   -I$(top_srcdir)/src/libfs \
+	   -I$(top_srcdir)/src/libbio
 
 all: all-am
 
@@ -265,6 +268,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bfs_super.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inode.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

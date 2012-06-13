@@ -17,6 +17,7 @@ struct bio {
 	struct bio_operations	*bi_ops;	/* set of operation pointers */
 	enum bio_type		bi_type;	/* type of i/o operation */
 	struct buffer_head	*bi_buff;	/* kernel buffer */
+	bool			bi_finished;	/* tells i/o finished or not */
 };
 
 struct bio_operations {
@@ -25,5 +26,7 @@ struct bio_operations {
 };
 
 extern struct bio_operations biops;
+
+extern void buffer_io(struct bio *bio);
 
 #endif

@@ -50,14 +50,20 @@ static void *disk_controller(void *a_dc) {
 		/* wait for i/o request from the kernel */
 		pthread_cond_wait( &dc->dc_io_req, &dc->dc_mutex);
 	
-		/* if the kernel asked to read something */
-		if (dc->dc_bio->bi_type == BI_read)
+		/* checking with what kernel wants */
+		switch(dc->dc_bio->bi_type) {
+		case BI_read:
+			/* if the kernel asked to read something */
 			(io->read_block)(dc->dc_bio);
-	
-		/* if the kernel asked to write something */
-		if (dc->dc_bio->bi_type == BI_write)
+			break;
+
+		case BI_write:
+			/* if the kernel asked to write something */
 			(io->write_block)(dc->dc_bio);
-	
+			break;
+		}
+
+		/* inform kernel that its task is served */	
 		raise_intr(__NR_disk_irq);
 
 		pthread_mutex_unlock(&dc->dc_mutex);

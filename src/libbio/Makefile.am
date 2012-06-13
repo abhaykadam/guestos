@@ -3,7 +3,8 @@ libbio_a_SOURCES = \
 		dctrl.h \
 		dctrl.c \
 		bio.h \
-		bio.c
+		bio.c \
+		io.c
 		
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 

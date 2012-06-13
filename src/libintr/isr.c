@@ -17,3 +17,7 @@ void isr_div_by_zero(void) {
 
 	return;
 }
+
+void isr_disk_irq() {
+	
+}
