@@ -31,8 +31,13 @@ static inline int atomic_read(const atomic_t *v) {
 /*
  * The type is used for indexing on 
  * a disk or disk partition
- */;
+ */
 typedef unsigned long sector_t;
+
+/*
+ * Used for block sizes
+ */
+typedef long int blksize_t;
 
 /**
  * container_of - cast a member of a structure out to the containing structure

@@ -7,7 +7,7 @@ static inline void __inode_copy (struct bfs_inode *dest,
 	memcpy(dest, src, sizeof(struct bfs_inode));
 }
 
-void inline inode_copy (struct bfs_inode *dest, 
+inline void inode_copy (struct bfs_inode *dest, 
 	struct bfs_inode *src){
 	
 	__inode_copy(dest, src);
@@ -17,12 +17,12 @@ static struct bfs_inode *__bfs_get_inode(struct super_block *sb,
 	unsigned long ino, struct buffer_head *bh) {
 
 	struct bio *bio;
-	bio->bi_sector = BFS_ITABLE_FBLOCK(sb) + 
-			(ino / BFS_INODES_PER_BLOCK(sb)) 
-			* BFS_BLOCK_SIZE(sb);
+	bio->bi_sector = bfs_itable_fblock(sb) + 
+			(ino / bfs_inodes_per_block(sb)) 
+			* bfs_block_size(sb);
 
 	bio->bi_bdev = sb->s_bdev;
-	bio->bi_size = BFS_BLOCK_SIZE(sb);
+	bio->bi_size = bfs_block_size(sb);
 	bio->bi_ops = &biops;	
 	bio->bi_type = BI_read;
 	bio->bi_buff = bh;
@@ -30,7 +30,7 @@ static struct bfs_inode *__bfs_get_inode(struct super_block *sb,
 	kbuffer_io(bio)	;
 
 	struct bfs_inode *the_inode = (struct bfs_inode *) bio->bi_buff
-		+ (ino % BFS_INODES_PER_BLOCK(sb))
+		+ (ino % bfs_inodes_per_block(sb))
 		* sizeof(struct bfs_inode);
 
 	return the_inode;

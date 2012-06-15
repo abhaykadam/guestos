@@ -85,6 +85,6 @@ LDADD = \
 	$(top_builddir)/src/libbio/libbio.a \
 	-lm -lpthread
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
 AM_LDFLAGS = #-static
 

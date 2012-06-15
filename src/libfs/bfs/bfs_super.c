@@ -55,23 +55,54 @@ static void bfs_write_inode(struct inode *inode) {
 	struct super_block *sb = inode->i_sb;
 	unsigned long i_no = inode->i_ino;
 	struct buffer_head *bh;
+	int i;
+
+	struct bfs_inode *new_inode = 
+		(struct bfs_inode *) malloc(sizeof(struct bfs_inode));
+			
+	new_inode->i_mode	= inode->i_mode;
+	new_inode->i_uid	= inode->i_uid;
+	new_inode->i_size	= inode->i_size;
+	new_inode->i_atime	= inode->i_atime;
+	new_inode->i_ctime	= inode->i_mtime;
+	new_inode->i_mtime	= inode->i_mtime;
+	new_inode->i_gid	= inode->i_gid;
+	new_inode->i_blocks	= inode->i_blocks;
+
+	for (i=0; i < BFS_N_BLOCKS; ++i) {
+		new_inode->i_block[i] = bfs_i(inode)->i_data[i]; 
+	}
+	
 
 	struct bfs_inode *b_inode = bfs_get_inode(sb, i_no, bh);
 
-	inode_copy(b_inode, inode);
-
+	copy_inode(b_inode, new_inode);
+	
 	struct bio *bio;
-	bio->bi_sector = BFS_ITABLE_FBLOCK(sb) + 
-			(i_no / BFS_INODES_PER_BLOCK(sb)) 
-			* BFS_BLOCK_SIZE(sb);
+	bio->bi_sector = bfs_itable_fblock(sb) + 
+			(i_no / bfs_inodes_per_block(sb)) 
+			* bfs_block_size(sb);
 
 	bio->bi_bdev = sb->s_bdev;
-	bio->bi_size = BFS_BLOCK_SIZE(sb);
+	bio->bi_size = bfs_block_size(sb);
 	bio->bi_ops = &biops;	
 	bio->bi_type = BI_write;
 	bio->bi_buff = bh;
 
 	kbuffer_io(bio)	;
+}
+
+/**
+ * bfs_delete_inode - delets inode and its related data 
+ * 			from memory as well as from disk
+ * @inode: inode to be deleted
+ *
+ * Deletes the VFS inode in memory and the file data
+ * and metadata on disk
+ */
+static void bfs_delete_inode(struct inode *inode) {
+	/* not yet developed */
+	return;
 }
 
 static const struct super_operations bfs_sops = {

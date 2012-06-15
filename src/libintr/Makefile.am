@@ -6,7 +6,7 @@ libintr_a_SOURCES = \
 		isr.c \
 		intr.c
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
 
 INCLUDES = \
 	-I$(top_srcdir)/src/libm2skernel \

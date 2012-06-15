@@ -62,9 +62,9 @@ struct inode {
 	gid_t			i_gid;			/* Group id of owner */
 	dev_t			i_rdev;			/* Real device node */
 	off_t			i_size;			/* File size in bytes */
-	struct timespec		i_atime;		/* Last access time */
-	struct timespec		i_mtime;		/* Last modify time */
-	struct timespec		i_ctime;		/* Last change time */
+	time_t		i_atime;		/* Last access time */
+	time_t		i_mtime;		/* Last modify time */
+	time_t		i_ctime;		/* Last change time */
 	unsigned int		i_blkbits;		/* Block size in bits */
 	blkcnt_t		i_blocks;		/* File size in blocks */
 	unsigned int		i_bytes;		/* Bytes consumed */

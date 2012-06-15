@@ -1,6 +1,8 @@
 #ifndef BFS_H
 #define BFS_H
 
+#include <types.h>
+
 /* bfs inode data in memory */
 struct bfs_inode_info {
 	uint32_t	i_data[12];
@@ -11,7 +13,7 @@ struct bfs_inode_info {
 	struct inode	vfs_inode;
 };
 
-static inline struct bfs_inode_info *BFS_I(struct inode *inode) {
+static inline struct bfs_inode_info *bfs_i(struct inode *inode) {
 	return container_of(inode, struct bfs_inode_info, vfs_inode);
 }
 
