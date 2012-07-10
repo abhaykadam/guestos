@@ -1,6 +1,7 @@
 #ifndef __LIBUTILS_LIST_H
 #define __LIBUTILS_LIST_H
 
+#include <types.h>
 
 /*
  * Simple doubly linked list implementation.
@@ -44,7 +45,7 @@ static inline void __dlist_add(struct list_head *new,
 }
 
 /**
- * list_add - add a new entry
+ * dlist_add - add a new entry
  * @new: new entry to be added
  * @head: list head to add it after
  *
@@ -58,7 +59,7 @@ static inline void dlist_add(struct list_head *new, struct list_head *head)
 
 
 /**
- * list_add_tail - add a new entry
+ * dlist_add_tail - add a new entry
  * @new: new entry to be added
  * @head: list head to add it before
  *
@@ -72,7 +73,7 @@ static inline void dlist_add_tail(struct list_head *new, struct list_head *head)
 
 
 /*
- * list_empty - tests whether list is empty
+ * dlist_empty - tests whether list is empty
  * @head: the list to test
  */
 
@@ -93,7 +94,7 @@ static inline void __dlist_del(struct list_head * prev, struct list_head * next)
 }
 
 /**
- * list_del - deletes entry from list.
+ * dlist_del - deletes entry from list.
  * @entry: the element to delete from the list.
  * Note: list_empty() on entry does not return true after this, the entry is
  * in an undefined state.
@@ -105,5 +106,26 @@ static inline void __dlist_del_entry(struct list_head *entry) {
 static inline void dlist_del(struct list_head *entry) {
 	__dlist_del(entry->prev, entry->next);
 }
+
+
+/**
+ * list_entry - get the struct for this entry
+ * @ptr:        the &struct list_head pointer.
+ * @type:       the type of the struct this is embedded in.
+ * @member:     the name of the list_struct within the struct.
+ */
+#define dlist_entry(ptr, type, member) \
+		container_of(ptr, type, member)
+
+/**
+ * dlist_for_each_entry  -       iterate over list of given type
+ * @pos:        the type * to use as a loop cursor.
+ * @head:       the head for your list.
+ * @member:     the name of the list_struct within the struct.
+ */
+#define dlist_for_each_entry(pos, head, member)                          \
+	for (pos = dlist_entry((head)->next, typeof(*pos), member);      \
+		&pos->member != (head);    \
+		pos = dlist_entry(pos->member.next, typeof(*pos), member))
 
 #endif

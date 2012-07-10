@@ -3,6 +3,7 @@
 
 #include <dlist.h>
 #include <types.h>
+#include <bdev.h>
 #include <dcache.h>
 #include <mount.h>
 #include <path.h>
@@ -13,13 +14,6 @@
 #include <inttypes.h>
 
 extern struct ctx_t *isa_ctx;
-
-struct block_device{
-	dev_t			bd_dev;
-	struct super_block	*bd_super;
-	unsigned		bd_block_size;
-	const char		*bd_name;
-};
 
 struct super_block {
 	struct list_head	s_list;			/* List of all superblocks */
@@ -43,6 +37,7 @@ struct super_block {
 
 struct super_operations {
 	struct inode *(*alloc_inode) (struct super_block *sb);
+	void (*read_inode) (struct inode *);
 	void (*destroy_inode) (struct inode *);
 	void (*write_inode) (struct inode *);
 	void (*drop_inode) (struct inode *);
@@ -115,16 +110,13 @@ struct file_system_type {
 	const char	*name;				/* Filesystem name */				
 	int		fs_flags;			/* Filesystem type flags */
 	int (*get_sb) (struct file_system_type *, int,
-	       const char *, void *, struct vfsmount *);/* Method for reading superblock */
+	       const dev_t, void *, struct vfsmount *);/* Method for reading superblock */
 	void (*kill_sb) (struct super_block *);		/* Method for removing superblock */
-	struct file_system_type *next;			/* Pointer to the next element in the list of filesystem types */
+	struct list_head fs_list;			/* List of filesystem types */
 	struct list_head fs_supers;			/* Head of list of superblocks */
 };
 
 struct nameidata;
-
-extern int register_filesystem(struct file_system_type *);
-extern int unregister_filesystem(struct file_system_type *);
 
 extern int alloc_fd(unsigned start, unsigned flags);
 extern int get_unused_fd(void);

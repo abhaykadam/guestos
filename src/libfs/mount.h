@@ -15,4 +15,8 @@ struct vfsmount{
 	atomic_t		mnt_count;		/* Usage count */
 };
 
+extern inline struct vfsmount *alloc_vfsmnt(void);
+extern inline void free_vfsmnt(struct vfsmount *mnt);
+extern int mount_block_dev(const struct block_device *bdev);
+
 #endif

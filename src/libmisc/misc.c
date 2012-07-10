@@ -277,7 +277,15 @@ void strdump(char *dest, char *src, int size)
 	*dest = 0;
 }
 
+size_t strtok_len(const char *str, const char *const delim) {
+	size_t len=0;
+	while (*str != *delim) {
+		len++;
+		str++;
+	}
 
+	return len;
+}
 
 
 /*

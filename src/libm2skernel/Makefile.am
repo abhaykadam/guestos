@@ -18,7 +18,7 @@ libm2skernel_a_SOURCES = m2skernel.h \
 	syscall.c \
 	syscall.dat
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmhandle \

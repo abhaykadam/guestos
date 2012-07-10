@@ -48,7 +48,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_guestos_OBJECTS = guestos.$(OBJEXT)
 guestos_OBJECTS = $(am_guestos_OBJECTS)
 guestos_LDADD = $(LDADD)
-guestos_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+guestos_DEPENDENCIES = $(top_builddir)/src/libbio/libbio.a \
+	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
@@ -61,8 +62,7 @@ guestos_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	dispatch.$(OBJEXT) fetch.$(OBJEXT) fu.$(OBJEXT) \
 	issue.$(OBJEXT) m2s.$(OBJEXT) processor.$(OBJEXT) \
@@ -71,7 +71,8 @@ am_m2s_OBJECTS = bpred.$(OBJEXT) commit.$(OBJEXT) decode.$(OBJEXT) \
 	writeback.$(OBJEXT)
 m2s_OBJECTS = $(am_m2s_OBJECTS)
 m2s_LDADD = $(LDADD)
-m2s_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+m2s_DEPENDENCIES = $(top_builddir)/src/libbio/libbio.a \
+	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
@@ -84,12 +85,12 @@ m2s_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_fast_OBJECTS = guestos.$(OBJEXT)
 m2s_fast_OBJECTS = $(am_m2s_fast_OBJECTS)
 m2s_fast_LDADD = $(LDADD)
-m2s_fast_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+m2s_fast_DEPENDENCIES = $(top_builddir)/src/libbio/libbio.a \
+	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
@@ -102,12 +103,12 @@ m2s_fast_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a
+	$(top_builddir)/src/libintr/libintr.a
 am_m2s_objdump_OBJECTS = m2s-objdump.$(OBJEXT)
 m2s_objdump_OBJECTS = $(am_m2s_objdump_OBJECTS)
 m2s_objdump_LDADD = $(LDADD)
-m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
+m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libbio/libbio.a \
+	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
 	$(top_builddir)/src/libdisasm/libdisasm.a \
@@ -120,8 +121,7 @@ m2s_objdump_DEPENDENCIES = $(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libesim/libesim.a \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a
+	$(top_builddir)/src/libintr/libintr.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -315,7 +315,9 @@ m2s_SOURCES = \
 	uop2.dat \
 	writeback.c
 
-INCLUDES = -I$(top_srcdir)/src/libfs \
+INCLUDES = \
+	-I$(top_srcdir)/src/libbio \
+	-I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libutils \
 	-I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libstruct \
@@ -328,10 +330,10 @@ INCLUDES = -I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
 	-I$(top_srcdir)/src/libgpudisasm \
-	-I$(top_srcdir)/src/libintr \
-	-I$(top_srcdir)/src/libbio
+	-I$(top_srcdir)/src/libintr
 
 LDADD = \
+	$(top_builddir)/src/libbio/libbio.a \
 	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
@@ -346,10 +348,9 @@ LDADD = \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
 	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a \
 	-lm -lpthread
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 AM_LDFLAGS = #-static
 all: all-recursive
 

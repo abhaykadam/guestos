@@ -2,7 +2,7 @@ lib_LIBRARIES = libnetwork.a
 libnetwork_a_SOURCES = \
 	network.h \
 	network.c
-AM_CFLAGS = -Wall -m32 -std=c99
+AM_CFLAGS = -Wall -m32
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmhandle \

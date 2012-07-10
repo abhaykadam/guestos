@@ -51,7 +51,9 @@ m2s_SOURCES = \
 	uop2.dat \
 	writeback.c
 
-INCLUDES = -I$(top_srcdir)/src/libfs \
+INCLUDES = \
+	-I$(top_srcdir)/src/libbio \
+	-I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libutils \
 	-I$(top_srcdir)/src/libmhandle \
 	-I$(top_srcdir)/src/libstruct \
@@ -64,10 +66,10 @@ INCLUDES = -I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libcachesystem \
 	-I$(top_srcdir)/src/libgpukernel \
 	-I$(top_srcdir)/src/libgpudisasm \
-	-I$(top_srcdir)/src/libintr \
-	-I$(top_srcdir)/src/libbio
+	-I$(top_srcdir)/src/libintr
 
 LDADD = \
+	$(top_builddir)/src/libbio/libbio.a \
 	$(top_builddir)/src/libfs/libfs.a \
 	$(top_builddir)/src/libutils/libutils.a \
 	$(top_builddir)/src/libm2skernel/libm2skernel.a \
@@ -82,9 +84,8 @@ LDADD = \
 	$(top_builddir)/src/libstruct/libstruct.a \
 	$(top_builddir)/src/libmhandle/libmhandle.a \
 	$(top_builddir)/src/libintr/libintr.a \
-	$(top_builddir)/src/libbio/libbio.a \
 	-lm -lpthread
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 AM_LDFLAGS = #-static
 

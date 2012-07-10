@@ -15,6 +15,6 @@ struct bfs_sb_info {
 	struct buffer_head	*s_sbh;			/* buffer containing the superblock */
 	struct bfs_super_block	*s_bs;			/* pointer to the superblock in the buffer */
 	struct buffer_head	*s_group_desc;		/* pointer to the group descriptor */
-};	
+};
 
 #endif

@@ -1,6 +1,6 @@
 #include <bio.h>
 #include <bfs_fs.h>
-#include <malloc.h>
+#include <memory.h>
 
 static inline void __inode_copy (struct bfs_inode *dest, 
 	struct bfs_inode *src) {
@@ -17,6 +17,9 @@ static struct bfs_inode *__bfs_get_inode(struct super_block *sb,
 	unsigned long ino, struct buffer_head *bh) {
 
 	struct bio *bio;
+	bio = (struct bio *)
+		malloc(sizeof(struct bio));
+
 	bio->bi_sector = bfs_itable_fblock(sb) + 
 			(ino / bfs_inodes_per_block(sb)) 
 			* bfs_block_size(sb);
@@ -33,6 +36,7 @@ static struct bfs_inode *__bfs_get_inode(struct super_block *sb,
 		+ (ino % bfs_inodes_per_block(sb))
 		* sizeof(struct bfs_inode);
 
+	free(bio);
 	return the_inode;
 }
 

@@ -5,4 +5,4 @@ libutils_a_SOURCES = \
 		types.h \
 		bitops.h
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32 -std=c99
+AM_CFLAGS = -Wall -fno-strict-aliasing -m32

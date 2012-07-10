@@ -2,10 +2,43 @@
 #include <buffer_head.h>
 #include <bfs.h>
 #include <bfs_fs.h>
+#include <bfs_fs.h>
+#include <bfs_fs_sb.h>
 #include <bio.h>
 #include <types.h>
 #include <dlist.h>
 #include <stdlib.h>
+#include <string.h>
+
+struct super_block *build_sb_from_bfs_sb(const struct buffer_head *bh) {
+	struct super_block *sb;
+	sb = (struct super_block *)
+		malloc(sizeof(struct super_block));
+
+	struct bfs_sb_info *bfs_sb_i;
+	bfs_sb_i = (struct bfs_sb_info *)
+		malloc(sizeof(struct bfs_sb_info));
+
+	struct bfs_super_block *bfs_sb;
+	bfs_sb = (struct bfs_super_block *)bh;
+
+	bfs_sb_i->s_inodes_per_block	= bfs_sb->s_inode_size / (1024<<bfs_sb->s_log_block_size);
+	bfs_sb_i->s_blocks_per_group	= bfs_sb->s_blocks_per_group;
+	bfs_sb_i->s_inodes_per_group	= bfs_sb->s_inodes_per_group;
+	bfs_sb_i->s_itb_per_group	= bfs_sb->s_inodes_per_group
+						/ bfs_sb_i->s_inodes_per_block;
+	bfs_sb_i->s_inode_size		= bfs_sb->s_inode_size;
+	bfs_sb_i->s_sbh			= bh;
+	bfs_sb_i->s_bs			= (struct bfs_super_block *)bh;
+
+
+	sb->s_blocksize			= 1024<<bfs_sb->s_log_block_size;
+	strcpy(sb->s_id,bfs_sb->s_volume_name);
+	sb->s_fs_info			= bfs_sb_i;
+
+	return sb;
+}
+
 
 /**
  * bfs_alloc_inode - creates a new inode

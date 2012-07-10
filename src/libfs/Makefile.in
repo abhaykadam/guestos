@@ -68,7 +68,8 @@ AR = ar
 ARFLAGS = cru
 libfs_a_AR = $(AR) $(ARFLAGS)
 libfs_a_LIBADD =
-am_libfs_a_OBJECTS = inode.$(OBJEXT) file.$(OBJEXT) mount.$(OBJEXT)
+am_libfs_a_OBJECTS = inode.$(OBJEXT) file.$(OBJEXT) bdev.$(OBJEXT) \
+	filesystem.$(OBJEXT) mount.$(OBJEXT)
 libfs_a_OBJECTS = $(am_libfs_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -230,13 +231,18 @@ libfs_a_SOURCES = \
 		fs_struct.h \
 		inode.c \
 		file.c \
-		mount.c \
-		buffer_head.h
+		buffer_head.h \
+		bdev.h \
+		bdev.c \
+		filesystem.h \
+		filesystem.c \
+		mount.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 INCLUDES = -I$(top_srcdir)/src/libutils \
 	   -I$(top_srcdir)/src/libfs/hostfs \
-	   -I$(top_srcdir)/src/libfs/bfs
+	   -I$(top_srcdir)/src/libfs/bfs \
+	   -I$(top_srcdir)/src/libbio
 
 all: all-recursive
 
@@ -315,7 +321,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bdev.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filesystem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mount.Po@am__quote@
 

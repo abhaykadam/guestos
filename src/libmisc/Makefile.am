@@ -1,5 +1,5 @@
 lib_LIBRARIES = libmisc.a
 libmisc_a_SOURCES = misc.c misc.h
 
-AM_CFLAGS = -Wall -m32 -std=c99
+AM_CFLAGS = -Wall -m32
 

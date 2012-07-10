@@ -13,12 +13,17 @@ libfs_a_SOURCES = \
 		fs_struct.h \
 		inode.c \
 		file.c \
-		mount.c \
-		buffer_head.h
+		buffer_head.h \
+		bdev.h \
+		bdev.c \
+		filesystem.h \
+		filesystem.c \
+		mount.c
 
 AM_CFLAGS = -Wall -fno-strict-aliasing -m32
 
 INCLUDES = -I$(top_srcdir)/src/libutils \
 	   -I$(top_srcdir)/src/libfs/hostfs \
-	   -I$(top_srcdir)/src/libfs/bfs
+	   -I$(top_srcdir)/src/libfs/bfs \
+	   -I$(top_srcdir)/src/libbio
 

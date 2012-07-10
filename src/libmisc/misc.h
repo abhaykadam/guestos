@@ -144,6 +144,7 @@ void map_flags(struct string_map_t *map, int flags, char *out, int length);
 void strccpy(char *dest, char *src, int size);
 void strccat(char *dest, char *src);
 void strdump(char *dest, char *src, int size);
+size_t strtok_len(const char *str, const char *const delim);
 
 /* File management */
 FILE *open_read(char *fname);

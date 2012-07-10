@@ -4,7 +4,7 @@
 #define BFS_NDIR_BLOCKS                12
 #define BFS_N_BLOCKS                   (BFS_NDIR_BLOCKS)
 
-struct bfs_supr_block {
+struct bfs_super_block {
 	uint32_t	s_inodes_count;			/* Total number of inodes */
 	uint32_t	s_blocks_count;			/* Filesystem size in blocks */
 	uint32_t	s_free_blocks_count;		/* Free blocks counter */
@@ -144,5 +144,8 @@ static inline uint32_t bfs_desc_per_block(struct super_block *sb) {
 static inline uint32_t bfs_inodes_per_group(struct super_block *sb) {
 	return bfs_sb(sb)->s_inodes_per_group;
 }
+
+extern struct super_block *build_sb_from_bfs_sb
+	(const struct buffer_head *bh);
 
 #endif

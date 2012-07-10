@@ -43,12 +43,13 @@ static void *disk_controller(void *a_dc) {
 	while (true) {
 		pthread_mutex_lock(&dc->dc_mutex);
 	
-		/* registers the handles for the i/o operations */	
-		dc->dc_bio->bi_ops = &biops;
-		struct bio_operations *io = dc->dc_bio->bi_ops;
-	
 		/* wait for i/o request from the kernel */
 		pthread_cond_wait( &dc->dc_io_req, &dc->dc_mutex);
+
+		/* registers the handles for the i/o operations */	
+		dc->dc_bio->bi_ops = &biops;
+	
+		struct bio_operations *io = dc->dc_bio->bi_ops;
 	
 		/* checking with what kernel wants */
 		switch(dc->dc_bio->bi_type) {
