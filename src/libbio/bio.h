@@ -1,9 +1,10 @@
 #ifndef BIO_H
 #define BIO_H
 
-#include <fs.h>
 #include <buffer_head.h>
+#include <bdev.h>
 #include <types.h>
+#include <stdbool.h>
 
 enum bio_type {
 	BI_read,
@@ -25,8 +26,8 @@ struct bio_operations {
 	int (*write_block) (struct bio *bio);
 };
 
-extern struct bio_operations biops;
+struct bio_operations biops;
 
-extern void kbuffer_io(struct bio *bio);
+void kbuffer_io(struct bio *bio);
 
 #endif

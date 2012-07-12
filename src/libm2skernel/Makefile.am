@@ -1,5 +1,5 @@
-lib_LIBRARIES = libm2skernel.a
-libm2skernel_a_SOURCES = m2skernel.h \
+noinst_LTLIBRARIES = libm2skernel.la
+libm2skernel_la_SOURCES = m2skernel.h \
 	isa.c \
 	context.c \
 	elf.c \
@@ -18,7 +18,7 @@ libm2skernel_a_SOURCES = m2skernel.h \
 	syscall.c \
 	syscall.dat
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmhandle \
@@ -30,7 +30,4 @@ INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libutils \
 	-I$(top_srcdir)/src/libintr
 
-
-
-
-
+ACLOCAL_AMFLAGS = -I m4

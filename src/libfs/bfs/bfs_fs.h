@@ -1,6 +1,10 @@
 #ifndef BFS_SUPER_H
 #define BFS_SUPER_H
 
+#include <fs.h>
+#include <bfs_fs_sb.h>
+#include <inttypes.h>
+
 #define BFS_NDIR_BLOCKS                12
 #define BFS_N_BLOCKS                   (BFS_NDIR_BLOCKS)
 
@@ -88,8 +92,8 @@ enum {
 /**
  * Gets BFS superblock from VFS superblock
  */
-static inline struct bfs_sb_info *bfs_sb(struct super_block *sb) {
-	return sb->s_fs_info;
+static inline struct bfs_sb_info* bfs_sb(struct super_block *sb) {
+	return (struct bfs_sb_info *)(sb->s_fs_info);
 }
 
 /**

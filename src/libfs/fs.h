@@ -57,9 +57,9 @@ struct inode {
 	gid_t			i_gid;			/* Group id of owner */
 	dev_t			i_rdev;			/* Real device node */
 	off_t			i_size;			/* File size in bytes */
-	time_t		i_atime;		/* Last access time */
-	time_t		i_mtime;		/* Last modify time */
-	time_t		i_ctime;		/* Last change time */
+	time_t			i_atime;		/* Last access time */
+	time_t			i_mtime;		/* Last modify time */
+	time_t			i_ctime;		/* Last change time */
 	unsigned int		i_blkbits;		/* Block size in bits */
 	blkcnt_t		i_blocks;		/* File size in blocks */
 	unsigned int		i_bytes;		/* Bytes consumed */
@@ -109,7 +109,7 @@ struct file_operations {
 struct file_system_type {
 	const char	*name;				/* Filesystem name */				
 	int		fs_flags;			/* Filesystem type flags */
-	int (*get_sb) (struct file_system_type *, int,
+	struct super_block* (*get_sb) (struct file_system_type *, int,
 	       const dev_t, void *, struct vfsmount *);/* Method for reading superblock */
 	void (*kill_sb) (struct super_block *);		/* Method for removing superblock */
 	struct list_head fs_list;			/* List of filesystem types */

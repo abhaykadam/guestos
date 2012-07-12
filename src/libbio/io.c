@@ -4,7 +4,7 @@
 
 extern struct dctrl dc;
 
-static void __kbuffer_io(struct bio *bio) {
+void kbuffer_io(struct bio *bio) {
 
 	pthread_mutex_lock(&dc.dc_mutex);
 
@@ -23,8 +23,4 @@ static void __kbuffer_io(struct bio *bio) {
 	*/
 	while (dc.dc_bio->bi_finished==false)
 		;
-}
-
-void kbuffer_io(struct bio *bio) {
-	__kbuffer_io(bio);
 }

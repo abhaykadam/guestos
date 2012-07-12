@@ -1,5 +1,5 @@
-lib_LIBRARIES = libgpukernel.a
-libgpukernel_a_SOURCES = \
+noinst_LTLIBRARIES = libgpukernel.la
+libgpukernel_la_SOURCES = \
 	cal-abi.c \
 	gpuisa.c \
 	gpukernel.c \
@@ -10,7 +10,7 @@ libgpukernel_a_SOURCES = \
 	opencl.c \
 	opencl-obj.c
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -DMHANDLE -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing -DMHANDLE
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmhandle \
@@ -22,3 +22,5 @@ INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libm2skernel \
 	-I$(top_srcdir)/src/libfs\
 	-I$(top_srcdir)/src/libutils
+
+ACLOCAL_AMFLAGS = -I m4

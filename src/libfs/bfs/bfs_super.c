@@ -138,7 +138,7 @@ static void bfs_delete_inode(struct inode *inode) {
 	return;
 }
 
-static const struct super_operations bfs_sops = {
+extern const struct super_operations bfs_sops = {
 	.alloc_inode	= bfs_alloc_inode,
 	.destroy_inode	= bfs_destroy_inode,
 	.write_inode	= bfs_write_inode

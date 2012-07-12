@@ -1,7 +1,7 @@
 #ifndef BFS_FS_SB_H
 #define BFS_FS_SB_H
 
-#include <buffer_head.h>
+#include <inttypes.h>
 
 struct bfs_sb_info {
 	uint32_t		s_inodes_per_block;	/* number of inodes per block */
@@ -16,5 +16,7 @@ struct bfs_sb_info {
 	struct bfs_super_block	*s_bs;			/* pointer to the superblock in the buffer */
 	struct buffer_head	*s_group_desc;		/* pointer to the group descriptor */
 };
+
+const struct super_operations bfs_sops;
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef BUFFER_HEAD
 #define BUFFER_HEAD
 
+#include <types.h>
+
 enum bh_state_bits{
 	BH_Uptodate,				/* contains valid data */
 	BH_Dirty,				/* is dirty */

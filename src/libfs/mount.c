@@ -1,14 +1,18 @@
+#include <dlist.h>
+#include <mount.h>
 #include <bio.h>
 #include <bfs_fs.h>
-#include <mount.h>
-#include <memory.h>
-#include <unistd.h>
+#include <sys/types.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 
 extern struct list_head block_devices;
-extern const struct super_operations bfs_sops;
 
 LIST_HEAD(super_blocks);
+
+extern struct super_block *build_sb_from_bfs_sb(const struct buffer_head *bh);
 
 static struct super_block *get_host_sb(struct file_system_type *, 
 	int , const dev_t , void *, struct vfsmount *);
@@ -47,33 +51,11 @@ int mount_hostfs(struct vfsmount *hostfs_mnt) {
 					so, it won't have parent fs */
 	hostfs_mnt->mnt_mountpoint = 0;
 	hostfs_mnt->mnt_root = 0;
-	hostfs_mnt->mnt_sb = hostfs_fs_type.get_sb(&hostfs_fs_type, 0,0,0,hostfs_mnt);
+	hostfs_mnt->mnt_sb = hostfs_fs_type.get_sb(
+		&hostfs_fs_type, 0, 0, 0,hostfs_mnt);
 
 	
 	return err;
-}
-
-int mount_block_dev(const struct block_device *bdev) {
-	int err=0;
-
-	struct vfsmount *vfsmnt=0;
-
-	vfsmnt = alloc_vfsmnt();
-
-	/* create a directory in hostfs 
-	which will be the mount-point
-	for mounted the block device */
-	char mount_point[LINE_MAX];
-	sprintf(mount_point, "./disk%d", bdev->bd_dev);
-	
-	int status;
-	status = mkdir(mount_point, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-	if (status){
-		perror("error");
-		exit(-1);
-	}
-
-	
 }
 
 static struct super_block *get_host_sb(struct file_system_type *type, 
@@ -92,6 +74,32 @@ static const struct file_system_type bfs_fs_type = {
 	.get_sb		= get_bfs_sb,
 	.kill_sb	= kill_bfs_sb
 };
+
+int mount_block_dev(const struct block_device *bdev) {
+	int err=0;
+
+	/* create a directory in hostfs 
+	which will be the mount-point
+	for mounted the block device */
+	char mount_point[LINE_MAX];
+	sprintf(mount_point, "./disk%d", bdev->bd_dev);
+	
+	int status;
+	status = mkdir(mount_point, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	if (status){
+		perror("error");
+		exit(-1);
+	}
+
+	struct vfsmount *bfs_mnt=0;
+	bfs_mnt = alloc_vfsmnt();
+	
+	bfs_mnt->mnt_sb = bfs_fs_type.get_sb
+		(&bfs_fs_type, 0, bdev->bd_dev, 0,bfs_mnt);
+
+	return err;	
+}
+
 
 static struct super_block *get_bfs_sb(struct file_system_type *type, 
 	int flags, const dev_t dev, 
@@ -127,7 +135,7 @@ static struct super_block *get_bfs_sb(struct file_system_type *type,
 	bio.bi_sector	= blk_dev->bd_block_size;
 	bio.bi_bdev	= blk_dev;
 	bio.bi_size	= blk_dev->bd_block_size;;
-	bio.bi_ops	= &bfs_sops;	
+	bio.bi_ops	= &biops;	
 	bio.bi_type	= BI_read;
 	bio.bi_buff	= bh;
 

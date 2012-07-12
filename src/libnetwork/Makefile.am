@@ -1,8 +1,8 @@
-lib_LIBRARIES = libnetwork.a
-libnetwork_a_SOURCES = \
+noinst_LTLIBRARIES = libnetwork.la
+libnetwork_la_SOURCES = \
 	network.h \
 	network.c
-AM_CFLAGS = -Wall -m32
+AM_CFLAGS = -Wall
 
 INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libmhandle \
@@ -11,3 +11,4 @@ INCLUDES = -I$(top_srcdir)/src/libstruct \
 	-I$(top_srcdir)/src/libesim \
 	-I$(top_srcdir)/src/libmisc
 
+ACLOCAL_AMFLAGS = -I m4

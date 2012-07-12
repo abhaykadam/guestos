@@ -12,7 +12,6 @@
  * dentry.
  */
 struct qstr {
-	unsigned int 		hash;
 	unsigned int 		len;
 	const unsigned char	*name;
 };

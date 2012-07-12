@@ -1,6 +1,4 @@
 #include <bio.h>
-#include <buffer_head.h>
-#include <types.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -45,7 +43,7 @@ static int write_dblock (struct bio *bio) {
 	return 0;	
 }
 
-struct bio_operations biops = {
+extern struct bio_operations biops = {
 	.read_block	= read_dblock,
 	.write_block	= write_dblock
 };

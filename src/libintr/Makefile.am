@@ -1,12 +1,12 @@
-lib_LIBRARIES = libintr.a
-libintr_a_SOURCES = \
+noinst_LTLIBRARIES = libintr.la
+libintr_la_SOURCES = \
 		pic.h \
 		isr.h \
 		pic.c \
 		isr.c \
 		intr.c
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing
 
 INCLUDES = \
 	-I$(top_srcdir)/src/libm2skernel \
@@ -17,3 +17,5 @@ INCLUDES = \
 	-I$(top_srcdir)/src/libgpukernel \
 	-I$(top_srcdir)/src/libfs \
 	-I$(top_srcdir)/src/libutils
+
+ACLOCAL_AMFLAGS = -I m4

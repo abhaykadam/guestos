@@ -1,4 +1,5 @@
 SUBDIRS = \
+	libbio \
 	libfs \
 	libutils \
 	libmhandle \
@@ -12,44 +13,13 @@ SUBDIRS = \
 	libcachesystem \
 	libgpukernel \
 	libgpudisasm \
-	libintr \
-	libbio
+	libintr
 
 bin_PROGRAMS = \
-	m2s-fast \
-	m2s-objdump \
-	m2s \
 	guestos 
 
 guestos_SOURCES = \
 	guestos.c
-
-m2s_fast_SOURCES = \
-	guestos.c
-
-m2s_objdump_SOURCES = m2s-objdump.c
-
-m2s_SOURCES = \
-	bpred.c \
-	commit.c \
-	decode.c \
-	dispatch.c \
-	fetch.c \
-	fu.c \
-	issue.c \
-	m2s.c \
-	m2s.h \
-	processor.c \
-	queues.c \
-	recover.c \
-	rf.c \
-	rob.c \
-	sched.c \
-	tcache.c \
-	uop.c \
-	uop1.dat \
-	uop2.dat \
-	writeback.c
 
 INCLUDES = \
 	-I$(top_srcdir)/src/libbio \
@@ -68,24 +38,27 @@ INCLUDES = \
 	-I$(top_srcdir)/src/libgpudisasm \
 	-I$(top_srcdir)/src/libintr
 
-LDADD = \
-	$(top_builddir)/src/libbio/libbio.a \
-	$(top_builddir)/src/libfs/libfs.a \
-	$(top_builddir)/src/libutils/libutils.a \
-	$(top_builddir)/src/libm2skernel/libm2skernel.a \
-	$(top_builddir)/src/libdisasm/libdisasm.a \
-        $(top_builddir)/src/libopt/libopt.a \
-	$(top_builddir)/src/libmisc/libmisc.a \
-	$(top_builddir)/src/libcachesystem/libcachesystem.a \
-	$(top_builddir)/src/libgpukernel/libgpukernel.a \
-	$(top_builddir)/src/libgpudisasm/libgpudisasm.a \
-	$(top_builddir)/src/libnetwork/libnetwork.a \
-	$(top_builddir)/src/libesim/libesim.a \
-	$(top_builddir)/src/libstruct/libstruct.a \
-	$(top_builddir)/src/libmhandle/libmhandle.a \
-	$(top_builddir)/src/libintr/libintr.a \
+guestos_LDADD = \
+	$(top_builddir)/src/libm2skernel/libm2skernel.la \
+	$(top_builddir)/src/libdisasm/libdisasm.la \
+        $(top_builddir)/src/libopt/libopt.la \
+	$(top_builddir)/src/libmisc/libmisc.la \
+	$(top_builddir)/src/libcachesystem/libcachesystem.la \
+	$(top_builddir)/src/libgpukernel/libgpukernel.la \
+	$(top_builddir)/src/libgpudisasm/libgpudisasm.la \
+	$(top_builddir)/src/libnetwork/libnetwork.la \
+	$(top_builddir)/src/libesim/libesim.la \
+	$(top_builddir)/src/libstruct/libstruct.la \
+	$(top_builddir)/src/libmhandle/libmhandle.la \
+	$(top_builddir)/src/libutils/libutils.la \
+	$(top_builddir)/src/libbio/libbio.la \
+	$(top_builddir)/src/libfs/libfs.la \
+	$(top_builddir)/src/libintr/libintr.la \
 	-lm -lpthread
 
-AM_CFLAGS = -Wall -fno-strict-aliasing -m32
+AM_CFLAGS = -Wall -fno-strict-aliasing
 AM_LDFLAGS = #-static
+
+
+ACLOCAL_AMFLAGS = -I m4
 
